@@ -1,0 +1,29 @@
+status: "yarn节点异常"
+describe: ""
+priority: 10
+version: "-"
+checklist:
+  - status: "yarn节点所在磁盘占用>90%"
+    describe: "各个节点宿主机df -h查看磁盘占用，磁盘Use% >90%"
+    priority: 9
+    version: "-"
+    todo: "删除历史数据、清理日志文件、减小kafka默认留存时间，释放磁盘空间"
+
+  - status: "yarn节点相关机器时间不一致"
+    describe: "各个节点宿主机查看date，确认时间是否一致"
+    priority: 10
+    version: "-"
+    todo: "配置NTP服务同步时间，确保所有yarn节点时间一致"
+
+
+# 填写说明：
+# 1. name: 问题的简短标题
+# 2. pages: 相关的运维页面或功能模块
+# 3. check: 顶层的检查要点（可选）
+# 4. 每个问题项包含以下字段：
+#    - reason: 问题产生的原因
+#    - status: 问题出现的具体现象
+#    - check: 检查步骤的数组，如果没有检查步骤设置为[]
+#    - version: 影响的版本范围，不受版本限制写"-"
+#    - todo: 解决方案描述，没有解决方案写null
+#    - next: 相关问题引用，如果没有相关问题可删除该字段

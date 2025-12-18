@@ -72,8 +72,8 @@ class TreeBuilder:
         for path_part in path[1:]:
             found = False
             for child in current.children:
-                # 检查是否匹配（处理refer的情况）
-                if child.status == path_part or f"[引用]{child.status}" == path_part:
+                # 检查是否匹配
+                if child.status == path_part:
                     current = child
                     found = True
                     break
@@ -160,14 +160,14 @@ class TreeBuilder:
                 version=refer_issue.version,
                 todo="",  # 引用的问题本身没有todo
                 source_file=refer_issue.file_name,
-                original_path=path + [f"[引用]{refer_name}"],
+                original_path=path + [refer_name],  # 移除[引用]前缀
                 is_refer=True,
                 parent_ref=parent_file
             )
 
             # 递归构建引用问题的子项
             for item in refer_issue.checklist:
-                child_tree = self._build_child_tree(item, refer_issue.file_name, path + [f"[引用]{refer_name}"])
+                child_tree = self._build_child_tree(item, refer_issue.file_name, path + [refer_name])  # 移除[引用]前缀
                 if child_tree:
                     refer_tree.children.append(child_tree)
 

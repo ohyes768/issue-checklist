@@ -117,7 +117,7 @@ class DataLoader:
         # 处理refer类型
         if 'refer' in item_data:
             return ChecklistItem(
-                status=f"引用: {item_data['refer']}",
+                status=item_data['refer'],  # 直接使用引用的问题名称
                 describe=f"关联到问题: {item_data['refer']}",
                 priority=item_data.get('priority', 1),
                 version=item_data.get('version', '-'),

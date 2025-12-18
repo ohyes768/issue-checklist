@@ -4,7 +4,7 @@ priority: 10
 version: "-"
 checklist:
   - status: "yarn节点所在磁盘占用>90%"
-    describe: "各个节点宿主机df -h查看磁盘占用，磁盘Use% >90%"
+    describe: "1.各个节点宿主机df -h查看磁盘占用，磁盘Use% >90%"
     priority: 9
     version: "-"
     todo: "删除历史数据、清理日志文件、减小kafka默认留存时间，释放磁盘空间"

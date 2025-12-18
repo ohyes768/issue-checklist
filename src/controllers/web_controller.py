@@ -114,7 +114,7 @@ class WebController:
             margin: 0.1rem 0;
             height: auto;
         }
-        </style>
+                </style>
         """, unsafe_allow_html=True)
 
         st.markdown('<div class="left-panel">', unsafe_allow_html=True)
@@ -150,7 +150,7 @@ class WebController:
         if not current_path:
             st.info("未开始排查")
         else:
-            # 树状层级显示
+            # 树状层级显示 - 使用下划线链接
             for i, path_item in enumerate(current_path):
                 if i == len(current_path) - 1:
                     # 当前位置高亮显示
@@ -160,16 +160,16 @@ class WebController:
                         indent = "└─ " * (i - 1)
                         st.markdown(f'{indent}◉ **{path_item}**')
                 else:
-                    # 上级路径，可以点击导航
+                    # 上级路径，使用普通文字按钮
                     if i == 0:
-                        if st.button(f"{path_item}", key=f"nav_{i}", help="点击跳转到此位置"):
+                        if st.button(f'◉ **{path_item}**', key=f"nav_{i}", help=f"跳转到 {path_item}"):
                             # 构建到该位置的路径
                             target_path = current_path[:i+1]
                             self.state_manager.navigate_to_path(target_path)
                             st.rerun()
                     else:
                         indent = "└─ " * i
-                        if st.button(f"{indent}{path_item}", key=f"nav_{i}", help="点击跳转到此位置"):
+                        if st.button(f'{indent}◉ **{path_item}**', key=f"nav_{i}", help=f"跳转到 {path_item}"):
                             # 构建到该位置的路径
                             target_path = current_path[:i+1]
                             self.state_manager.navigate_to_path(target_path)
@@ -218,7 +218,7 @@ class WebController:
 
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.metric("优先级", display_node.priority)
+            st.metric("优先级/出现概率", display_node.priority)
         with col2:
             st.metric("适配版本", display_node.version if display_node.version else "-")
         with col3:
@@ -229,13 +229,8 @@ class WebController:
             else:
                 st.metric("检查项数目", 0)
 
-        # 显示来源信息
-        if display_node.is_refer:
-            st.info(f"📎 引用自: {display_node.source_file}")
-            if display_node.parent_ref:
-                st.info(f"📎 父级引用: {display_node.parent_ref}")
-        else:
-            st.info(f"📄 来源文件: {display_node.source_file}")
+        # 显示来源信息（统一格式）
+        st.info(f"📄 来源文件: {display_node.source_file}")
 
         # 显示根因分析（反序显示因果关系）
         if confirmed_item:
@@ -340,7 +335,7 @@ class WebController:
                             margin-left: 0;
                         ">
                             <h4 style="color: #999; text-decoration: line-through;">
-                                {item.status} (优先级: {item.priority})
+                                {item.status} ({item.version if item.version else '全版本'})
                             </h4>
                             <p style="color: #666;">{item.describe}</p>
                         </div>
@@ -360,7 +355,7 @@ class WebController:
                         " onmouseover="this.style.backgroundColor='#f8f9fa'"
                            onmouseout="this.style.backgroundColor='#ffffff'">
                             <h4 style="color: #262730;">
-                                {item.status} (优先级: {item.priority})
+                                {item.status} ({item.version if item.version else '全版本'})
                             </h4>
                             <p style="color: #666;">{item.describe}</p>
                         </div>
@@ -376,11 +371,8 @@ class WebController:
         """渲染已确认项目的解决方案"""
         st.markdown("### 🛠️ 解决方案")
 
-        # 显示已确认的项目名称
-        if confirmed_item.is_refer:
-            st.info(f"已确认引用项目: {confirmed_item.status}")
-        else:
-            st.info(f"已确认: {confirmed_item.status}")
+        # 显示已确认的项目名称（统一格式）
+        st.info(f"已确认: {confirmed_item.status}")
 
         if confirmed_item.todo:
             with st.success("解决方案"):

@@ -199,11 +199,9 @@ class StateManager:
         for i, path_item in enumerate(self.state.navigation_path):
             current_path.append(path_item)
 
-            # 处理引用项的显示标题
+            # 处理显示标题
             display_title = path_item
-            if path_item.startswith("[引用]"):
-                display_title = f"引用: {path_item[4:]}"
-            elif i > 0:  # 不是根节点
+            if i > 0:  # 不是根节点
                 # 查找对应的节点获取完整标题
                 if self.state.current_tree:
                     node = self.tree_builder.find_node_by_path(self.state.current_tree, current_path)

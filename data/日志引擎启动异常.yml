@@ -14,13 +14,13 @@ checklist:
 
   - status: "流任务启动时提示错误信息-资源不足"
     describe: "点击日志/告警引擎 启动/重启，提示流任务资源不足"
-    priority: 5
+    priority: 6
     version: "BaaS-v4.14+"
     todo: "运维账号登录flink监控页面，修改引擎slots数目，引擎最大并发数除以引擎槽位数得到实际占用的taskmanager节点数，申请的taskmanager个数之和要小于实际 yarn节点个数"
 
   - status: "流任务启动时提示错误信息-kafka节点预期不符，yarn节点预期不符"
     describe: "点击日志/告警引擎 启动/重启，提示kafka节点预期不符，yarn节点预期不符"
-    priority: 5
+    priority: 6
     version: "BaaS-v4.14+"
     checklist: 
       - refer: "yarn节点异常"
@@ -28,7 +28,7 @@ checklist:
 
   - status: "baasweb、baasflink程序版本不一致"
     describe: "关于 页面查看 BaaS引擎版本：baasweb版本（flink版本），判断是否一致"
-    priority: 5
+    priority: 3
     version: "BaaS-v4.9+"
     todo: "飞梭数据中台-升级管理，baasweb、baasflink程序包升级，版本保持一致"
 
@@ -40,14 +40,14 @@ checklist:
 
   - status: "探针发送数据使用lz4压缩"
     describe: "探针 发送配置查看 压缩方式为lz4"
-    priority: 7
+    priority: 2
     version: "-"
     todo: "探针发送配置修改压缩方式为snappy"
 
   - status: "集群多台机器部署"
     describe: "检查集群机器台数>2 "
-    priority: 7
-    version: "BaaS-v4.14+"
+    priority: 4
+    version: "BaaS-v4.9+"
     checklist: 
       - refer: "hadoop 版本未升级"
 

@@ -61,12 +61,7 @@ class MainApp:
 
             controller = st.session_state.controller
 
-            # 渲染顶部工具栏
-            selected_issue = controller.render_top_toolbar()
-
-            # 处理问题选择
-            if selected_issue:
-                controller.handle_issue_selection(selected_issue)
+            # 问题选择已移至左侧面板，无需额外处理
 
             # 渲染主内容区
             controller.render_main_content()

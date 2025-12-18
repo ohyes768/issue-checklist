@@ -44,6 +44,16 @@ checklist:
     version: "-"
     todo: "探针发送配置修改压缩方式为snappy"
 
+  - status: "集群多台机器部署"
+    describe: "检查集群机器台数>2 "
+    priority: 7
+    version: "BaaS-v4.14+"
+    checklist: 
+      - refer: "hadoop 版本未升级"
+
+
+
+   
 
 
 

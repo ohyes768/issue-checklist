@@ -36,6 +36,7 @@ class StateManager:
             self.state.navigation_path = [issue_name]  # 简化的路径，只包含问题名
             self.state.solution_text = None
             self.state.excluded_items.clear()
+            self.state.confirmed_item = None  # 重置已确认项目
 
             return True
         except Exception as e:
@@ -94,6 +95,9 @@ class StateManager:
                 if parent_item:
                     self.state.current_checklist = parent_item
                     self.state.solution_text = None
+                    # 清除已确认项目，确保右侧区域同步返回到checklist列表
+                    self.state.confirmed_item = None
+                    print(f"导航到父节点，清除已确认项目，当前路径: {self.state.navigation_path}")
                     return True
 
             return False
@@ -112,6 +116,9 @@ class StateManager:
                 self.state.navigation_path = path.copy()
                 self.state.current_checklist = target_node
                 self.state.solution_text = None
+                # 清除已确认项目，确保右侧区域同步更新
+                self.state.confirmed_item = None
+                print(f"导航到指定路径，清除已确认项目，新路径: {self.state.navigation_path}")
                 return True
 
             return False
@@ -127,6 +134,9 @@ class StateManager:
         self.state.current_checklist = None
         self.state.navigation_path = [self.state.current_issue_name] if self.state.current_issue_name else []
         self.state.solution_text = None
+        # 清除已确认项目，确保右侧区域同步返回到根状态
+        self.state.confirmed_item = None
+        print(f"导航到根节点，清除已确认项目")
         return True
 
     def exclude_item(self, item: TreeChecklistItem) -> bool:
@@ -145,7 +155,31 @@ class StateManager:
         """确认检查项"""
         try:
             item.confirmed = True
-            return self.navigate_to_child(item)
+            self.state.confirmed_item = item  # 记录已确认的项目
+
+            # 更新导航路径，使其包含当前确认的项目
+            if item.original_path:
+                # 使用项目的original_path更新导航路径
+                self.state.navigation_path = item.original_path.copy()
+                print(f"更新导航路径为: {self.state.navigation_path}")  # 调试信息
+
+            # 如果是引用项目，导航到被引用项目的子项
+            if item.is_refer:
+                if item.has_children():
+                    return self.navigate_to_child(item)
+                else:
+                    return True, None
+            else:
+                # 普通项目的处理逻辑
+                # 如果项目有解决方案且没有子节点，返回解决方案
+                if item.todo and not item.has_children():
+                    return True, item.todo
+                elif item.has_children():
+                    # 有子节点，导航到第一层子节点
+                    return self.navigate_to_child(item)
+                else:
+                    # 没有解决方案也没有子节点
+                    return True, None
         except Exception as e:
             print(f"确认项目失败: {e}")
             return False, None
@@ -202,6 +236,26 @@ class StateManager:
             self.state.navigation_path
         )
 
+    def get_display_node(self) -> Optional[TreeChecklistItem]:
+        """获取应该在详情面板显示的节点"""
+        # 如果有已确认的项目，显示已确认的项目
+        if self.state.confirmed_item:
+            return self.state.confirmed_item
+
+        # 如果有当前问题，将问题转换为TreeChecklistItem显示
+        if self.state.current_issue and self.state.current_tree:
+            # 如果导航路径只有根节点，显示问题本身
+            if len(self.state.navigation_path) <= 1:
+                return self.state.current_tree
+
+            # 如果导航路径有多个节点，显示最后一个导航节点（即当前所在的检查项）
+            return self.tree_builder.find_node_by_path(
+                self.state.current_tree,
+                self.state.navigation_path
+            )
+
+        return None
+
     def has_solution(self) -> bool:
         """当前是否有解决方案"""
         return self.state.solution_text is not None
@@ -213,6 +267,14 @@ class StateManager:
     def reset_state(self):
         """重置状态"""
         self.state.reset_state()
+
+    def get_confirmed_item(self) -> Optional[TreeChecklistItem]:
+        """获取当前已确认的项目"""
+        return self.state.confirmed_item
+
+    def has_confirmed_item(self) -> bool:
+        """是否有已确认的项目"""
+        return self.state.confirmed_item is not None
 
     def get_state_summary(self) -> dict:
         """获取状态摘要"""
@@ -227,5 +289,6 @@ class StateManager:
             'current_items_count': len(current_items),
             'excluded_items_count': len(self.state.excluded_items),
             'has_solution': self.has_solution(),
-            'is_at_root': self.state.is_at_root()
+            'is_at_root': self.state.is_at_root(),
+            'has_confirmed_item': self.has_confirmed_item()
         }

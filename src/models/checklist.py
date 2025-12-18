@@ -101,6 +101,7 @@ class AppState:
     excluded_items: List[str] = field(default_factory=list)  # 已排除项目路径
     navigation_path: List[str] = field(default_factory=list)  # 当前导航路径
     solution_text: Optional[str] = None  # 当前显示的解决方案
+    confirmed_item: Optional[TreeChecklistItem] = None  # 当前已确认的检查项
 
     def get_current_path_display(self) -> str:
         """获取当前路径的显示文本"""
@@ -128,3 +129,4 @@ class AppState:
         self.excluded_items.clear()
         self.navigation_path.clear()
         self.solution_text = None
+        self.confirmed_item = None

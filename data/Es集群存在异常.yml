@@ -1,0 +1,17 @@
+status: "Es集群存在异常"
+describe: "登录飞梭平台Es监控页面，状态为red或yellow，健康度<100%"
+priority: 7
+version: "-"
+checklist:
+  - refer: "Es集群卡顿"
+  - refer: "Es集群启动异常"
+  - status: "Es节点启动后分片恢复异常"
+    describe: "Es分片恢复时健康度到达一定阈值时下降，并重复该过程"
+    priority: 8
+    version: "-"
+    todo: "1.后台登录到es容器，查看正在恢复的索引：curl localhost:9200/_cat/recovery?active_only&v&h=index,shard,time,stage,bp,to,tor,top，如果有索引持续几分钟都没有恢复，一直卡住，则说明该索引有问题。2. 从1的步骤中，获取到对应的索引名，分片id，该分片对应的节点，登录到对应节点，执行以下命令：su - elasticsearch,/usr/hdp/2.5.3.0-37/elasticsearch/bin/elasticsearch-shard remove-corrupted-data --index indexName --shard-id shardid --truncate-clean-translog执行完该命令之后，会出来一个 POST /_cluster/reroute的一个命令，复制下来，到kibana dev Tools中执行，把false改为true执行即可。" 
+  - status: "Es节点启动后分片未恢复"
+    describe: "Es集群启动后分片恢复，健康度一直不变（<100%），"
+    priority: 8
+    version: "-"
+    todo: "出现这种情况一般是机器异常断电或磁盘损坏导致，这种需要执行 curl http://localhost:9200/_cat/health?v init 列为0，这种情况需要使用allocation_es_shard.sh脚本进行恢复" 

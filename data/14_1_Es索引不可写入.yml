@@ -1,0 +1,22 @@
+status: "Es索引不可写"
+describe: "界面查询告警数据/原始日志数据未入库"
+display: false
+priority: 10
+version: "-"
+checklist:
+  - refer: "Es索引未创建"
+  - status: "索引存在，数据未入库-别名不可写"
+    describe: "登录大数据页面，系统消息提示别名不可写"
+    priority: 8
+    version: "-"
+    todo: >
+      1.登录大数据页面，es监控--索引管理页面查看有最新的索引，然后使用 GET indexName查看新索引，返回结果中is_write_index为false，说明索引不可写。
+      2.登录大数据页面，es监控--索引管理页面查看有最新的索引，然后使用 PUT indexName/_settings ，修改is_write_index为true，然后再使用 GET indexName查看新索引，返回结果中is_write_index为true，说明索引可写，需要重新创建一个新的索引：先PUT indexName，然后绑定别名：PUT indexName/_alias/XXX {"is_write_index":true }。
+  
+  - status: "索引存在，数据未入库-索引被设置为只读"
+    describe: "登录大数据页面，下载流计算任务的日志，查看关键字：cluster_block_exception, reason=blocked by: [FORBIDDEN/12/index read-only / allow delete (api)，说明索引被设置为只读了。"
+    priority: 8
+    version: "-"
+    todo: >
+     登录kibana上执行该命令：PUT */_settings 
+      {"index.blocks.read_only_allow_delete": false}之后，重启流计算任务即可。

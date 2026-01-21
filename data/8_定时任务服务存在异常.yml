@@ -1,0 +1,11 @@
+status: "定时任务服务存在异常"
+describe: "登录大数据界面，定任务界面查看"
+priority: 5
+version: "-"
+checklist:
+   - status: "定时任务服务不存在"
+     describe: "登录大数据界面，定任务界面查看"
+     priority: 5
+     version: "-"
+     todo: >
+        登录大数据页面定时任务页面，查看索引创建的定时任务是否有执行。索引关键字'索引创建'，如未执行需要找对应开发排查。

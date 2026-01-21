@@ -1,0 +1,22 @@
+status: "飞梭中台/baas页面无法访问、白屏"
+describe: "后台执行 \"docker ps -a | grep baas\"，查看状态为starting"
+display: true
+version: "-"
+checklist: 
+  - refer: "yarn节点异常&kafka节点异常"
+  - status: "数据库流任务相关表迁移后存在脏数据"
+    describe: "查看baas日志，日志报错 \"flink下yaml配置文件中尽量不要使用空值，请把默认值写上\""
+    priority: 2
+    version: "-"
+    url: "https://wiki.das-security.cn/pages/viewpage.action?pageId=88313008"
+    todo: "后台命令进入Mysql/PG/HG，清理baas_monitor 数据库中pipeline相关表 按照顺序依次清理以下表：delete from t_pipeline_dbconfig;delete from t_pipeline_dbmetric;delete from t_flink_pipeline;delete from t_solution_user_bool_info;delete from t_solution;"
+
+  - status: "配置域名访问后未修改trust_refer"
+    describe: "查看auth日志，日志报错 \"存在host头攻击风险，禁止访问\""
+    priority: 10
+    version: "BaaS-v4.9+"
+    todo: >
+       1. 后台映射nacos的端口：。
+       2. 访问nacos页面，http://<ip>:18848/nacos，
+       3.登陆后选择命名空间ailpha_zq/，编辑core-prod当中trust_referer参数，追加映射后的IP或者域名，以逗号隔开。
+       4. 点击发布，重启auth服务。

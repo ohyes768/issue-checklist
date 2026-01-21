@@ -1,0 +1,13 @@
+status: "Es索引未创建"
+describe: "飞梭数据中台运维账号登录，查看Es监控，索引类型选择 流量日志/安全日志，确认本日/本周索引是否存在"
+display: false
+priority: 10
+version: "-"
+checklist:
+  - refer: "定时任务服务存在异常"
+  - status: "无最新索引"
+    describe: "登录后台重启baas服务，创建新的索引"
+    priority: 8
+    version: "-"
+    todo: "登录后台docker restart 1-baas-1或者到1.flink1容器中，/usr/hdp/2.5.3.0-37/baas/baasweb/bin/ext-cli.sh restart，重启之后查了是否创建了新的索引。"
+     

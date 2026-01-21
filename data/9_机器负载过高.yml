@@ -1,0 +1,16 @@
+status: "机器负载过高"
+describe: "登录后台top查看 load，或登录飞梭页面，信息监控页面查看机器负载占用曲线图"
+priority: 8
+version: "-"
+checklist:
+  - status: "机器io占用过高"
+    describe: "登录后台top查看wa等待很高，iostat 查看磁盘占用100%，或登录飞梭页面，信息监控页面查看io占用曲线图，一直100%"
+    priority: 8
+    version: "-"
+    todo: ""
+
+  - status: "机器cpu占用过高"
+    describe: "登录后台top查看%Cpu(s)占用很高，或登录飞梭页面，信息监控页面查看机器cpu占用曲线图"
+    priority: 8
+    version: "-"
+    todo: ""

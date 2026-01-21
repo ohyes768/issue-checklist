@@ -1,0 +1,30 @@
+status: "部分原始日志未入库"
+describe: "原始日志查询界面，未检索到探针所发送的部分数据"
+display: true
+version: "-"
+checklist: 
+  - status: "soc/apt数据发送配置 非utf-8格式"
+    describe: "查询日志引擎相关日志，检索Exception出现\"JsonParseException: Invalid UTF-8 start byte 0xb0\""
+    priority: 10
+    version: "-"
+    todo: "修改探针(soc/apt/其他）的数据发送格式为utf-8" 
+
+  - status: "探针发送的字段名存在特殊字符"
+    describe: "查询日志引擎相关日志，检索Exception出现\"mapper_parsing_exception\",\"failed to parse\""
+    priority: 5
+    version: "5.0之前"
+    todo: "1. 探针禁止soc.ip 等嵌套字段发送 2. 建议升级5.0版本以上"  
+
+  - status: "Es 索引mapping超过限制"
+    describe: "1.查询日志引擎相关日志，检索Exception出现，2.登录kibana，创建日志/流量相关index patterns，创建完成后查看Fields数目, >1000 "
+    priority: 4
+    version: "5.0之前"
+    todo: >
+      1.登录kibana，设置相关索引mapping上限，devtools执行命令：PUT ailpha-baas-log-*/_settings{ \"index.mapping.total_fields.limit\": 2000 } 
+      2. 建议升级5.0版本以上"  
+
+  - status: "数据中无machineCode字段"
+    describe: "飞梭数据中台运维账号登录，查看kafka监控，检查kafka原始日志数据中是否存在machineCode字段"
+    priority: 2
+    version: "BaaS-4.7+"
+    todo: "探针在数据中添加machineCode字段"

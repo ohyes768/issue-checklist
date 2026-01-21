@@ -1,0 +1,19 @@
+status: "kafka节点异常"
+describe: "查看kafka集群监控页面，存在异常的kafka节点"
+priority: 7
+version: "-"
+checklist:
+  - status: "kafka服务进程异常"
+    describe: "kafka节点进程停止，无法访问节点"
+    priority: 8
+    version: "-"
+    todo: "ambari启动对应停止的kafka节点。或者登录后台docker restart 对应的kafka节点，如重启之后还是不行，需要联系运维团队进行处理。" 
+    
+  - status: "kafka主题消费异常"
+    describe: "后台"
+    priority: 8
+    version: "-"
+    todo: >
+      1. 5.2版本之前，进入kafka容器中执行命令：docker exec -it kafka /bin/bash,./kafka-console-consumer.sh --zookeeper 1.zookeeper1 --topic com.dbapp.topic.rawevent ,topic名称可以根据需求自己换。
+      2. 5.2之后，消费命令docker run -ti --rm --net cilium-net -v /opt/ailpha-install/cluster_init/resolv.conf:/etc/resolv.conf ailpha-registry:5000/kafka:3.6.0 bash
+      sh /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server 1-kafka-1:9092 --topic com.dbapp.topic.rawevent | grep '1.1.1.1'

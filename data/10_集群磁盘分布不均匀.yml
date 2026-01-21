@@ -1,0 +1,12 @@
+status: "集群磁盘分布不均"
+describe: "查看服务器磁盘大小，使用df -h查看"
+priority: 5
+version: "-"
+checklist:
+  - status: "磁盘大小不一致"
+    describe: "到es容器中，使用curl http://localhost:9200/_cat/allocation?v查看最大磁盘与最小的磁盘之间相差几T或几十T"
+    priority: 6
+    version: "-"
+    todo: >
+       1.旧版本需要修改数据库中的配置:
+       2. 新版本可以数据配置界面进行查看并修改：

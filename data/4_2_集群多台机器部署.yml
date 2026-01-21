@@ -1,0 +1,6 @@
+    status: "集群多台机器部署"
+    describe: "检查集群机器台数>2 "
+    priority: 4
+    version: "BaaS-v4.9+"
+    checklist: 
+      - refer: "hadoop版本未升级"

@@ -1,0 +1,11 @@
+status: "hadoop版本未升级"
+describe: "后台执行docker ps -a|grep hadoop，若版本<3.4.1，需要升级hadoop版本"
+priority: 7
+version: "-"
+checklist:
+  - status: "hadoop版本未升级,需要升级hadoop版本"
+    describe: "hadoop版本未升级,需要升级hadoop版本"
+    priority: 8
+    version: "baas-4.9+"
+    todo: "下载运维底座hadoop升级包，运行升级脚本，下载时需要根据现场系统版本进行选择，下载地址：http://10.50.1.141/release/hadoop/pkg/" 
+ 

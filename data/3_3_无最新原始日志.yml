@@ -1,0 +1,8 @@
+status: "无最新原始日志"
+describe: "查看原始日志查询界面，近15分钟无原始日志"
+display: true
+version: "-"
+checklist: 
+  - refer: "原始日志入库延迟"
+  - refer: "原始日志未入库"
+

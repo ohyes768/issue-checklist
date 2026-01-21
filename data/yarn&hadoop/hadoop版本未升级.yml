@@ -1,6 +1,7 @@
 status: "hadoop版本未升级"
 describe: "后台执行docker ps -a|grep hadoop，若版本<3.4.1，需要升级hadoop版本"
 priority: 7
+display: false
 version: "-"
 checklist:
   - status: "hadoop版本未升级,需要升级hadoop版本"

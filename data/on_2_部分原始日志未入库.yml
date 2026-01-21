@@ -1,6 +1,7 @@
 status: "部分原始日志未入库"
 describe: "原始日志查询界面，未检索到探针所发送的部分数据"
 display: true
+priority: 2
 version: "-"
 checklist: 
   - status: "soc/apt数据发送配置 非utf-8格式"

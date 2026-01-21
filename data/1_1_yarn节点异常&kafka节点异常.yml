@@ -1,8 +1,0 @@
-    status: "yarn节点异常&kafka节点异常"
-    describe: "查看baas日志，日志报错 \"kafka、yarn节点数检测失败\""
-    priority: 6
-    version: "BaaS-v4.13+"
-    checklist: 
-      - refer: "yarn节点异常"
-      - refer: "kafka节点异常"
-    

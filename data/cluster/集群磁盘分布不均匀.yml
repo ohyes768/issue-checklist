@@ -1,4 +1,4 @@
-status: "集群磁盘分布不均"
+status: "集群磁盘分布不均匀"
 describe: "查看服务器磁盘大小，使用df -h查看"
 priority: 5
 version: "-"

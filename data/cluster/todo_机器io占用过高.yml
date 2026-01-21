@@ -1,0 +1,3 @@
+status: "机器io占用过高"
+describe: "登录后台top查看wa等待很高，iostat 查看磁盘占用100%，或登录飞梭页面，信息监控页面查看io占用曲线图，一直100%"
+display: false

@@ -1,0 +1,14 @@
+status: "数据留存相关"
+describe: "-"
+display: true
+priority: 1
+version: "-"
+checklist: 
+  - refer: "集群磁盘分布不均匀"
+  - status: "数据清理未生效"
+    describe: "cece"
+    priority: 10
+    version: "-"
+    todo: ""
+
+

@@ -1,6 +1,7 @@
 status: "飞梭中台/baas页面无法访问、白屏"
 describe: "后台执行 \"docker ps -a | grep baas\"，查看状态为starting"
 display: true
+priority: 5
 version: "-"
 checklist: 
   - refer: "yarn节点异常&kafka节点异常"

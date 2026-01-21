@@ -21,7 +21,6 @@ class MainApp:
 
     def __init__(self):
         self.controller = None
-        self.setup_page_config()
 
     def setup_page_config(self):
         """设置页面配置"""
@@ -96,6 +95,14 @@ class MainApp:
 def main():
     """主函数"""
     try:
+        # 设置页面配置（必须是第一个Streamlit命令）
+        st.set_page_config(
+            page_title="运维知识库智能排查助手",
+            page_icon="🔧",
+            layout="wide",
+            initial_sidebar_state="collapsed"
+        )
+
         # 设置错误处理
         def handle_error():
             st.error("应用遇到错误，请刷新页面重试")

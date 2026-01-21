@@ -39,6 +39,7 @@ class Issue:
     priority: int         # 问题整体优先级
     version: str          # 问题影响版本
     checklist: List[ChecklistItem]  # 直接原因checklist列表
+    display: bool = False  # 是否在问题列表中显示，默认为False
 
     def get_checklist_by_priority(self) -> List[ChecklistItem]:
         """按优先级降序返回checklist"""

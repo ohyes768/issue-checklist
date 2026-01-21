@@ -1,6 +1,7 @@
 status: "日志引擎启动异常"
 describe: "点击日志/告警引擎 启动/重启，未启动成功，任务启动5分钟后failed"
 priority: 10
+display: true
 version: "-"
 checklist: 
   - refer: "yarn节点异常"

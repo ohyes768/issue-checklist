@@ -1,6 +1,6 @@
 status: "原始日志入库延迟"
 describe: "查看原始日志查询界面，选择本日/本周，查看最新的原始日志采集器接收时间是否有变化，如有新的原始日志入库，表示原始日志入库延迟"
-priority: 10
+priority: 3
 display: true
 version: "-"
 checklist: 

@@ -1,7 +1,0 @@
-    status: "流任务启动时提示错误信息-kafka节点预期不符，yarn节点预期不符"
-    describe: "点击日志/告警引擎 启动/重启，提示kafka节点预期不符，yarn节点预期不符"
-    priority: 6
-    version: "BaaS-v4.14+"
-    checklist: 
-      - refer: "yarn节点异常"
-      - refer: "kafka节点异常"

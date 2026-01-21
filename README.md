@@ -85,30 +85,23 @@ uv pip install -r requirements.txt
 
 #### Windows
 ```cmd
-# 标准启动（自动配置环境）
 scripts\start.bat
-
-# 快速启动（跳过环境检查）
-scripts\start_quick.bat
 ```
 
 #### Linux/Mac
 ```bash
-# 标准启动（自动配置环境）
 ./scripts/start.sh
-
-# 快速启动（跳过环境检查）
-./scripts/start_quick.sh
 ```
 
 ### 📋 脚本说明
 
 | 脚本 | 说明 | 适用场景 |
 |------|------|---------|
-| `start.bat` / `start.sh` | 标准启动，自动配置环境 | 首次使用、生产环境 |
-| `start_quick.bat` / `start_quick.sh` | 快速启动，跳过检查 | 开发调试、频繁测试 |
+| `start.bat` / `start.sh` | 标准启动，自动配置虚拟环境 | 首次使用、日常开发 |
 | `start_venv_auto.bat` | 完整虚拟环境管理 | 需要详细环境控制 |
 | `stop_app.bat` / `stop_app.sh` | 停止应用 | 释放端口和进程 |
+
+**说明**: 所有启动脚本统一使用虚拟环境，确保依赖隔离和环境一致性。
 
 详细说明请查看：[启动脚本文档](scripts/README.md)
 
@@ -269,8 +262,7 @@ checklist:
 - ✨ 支持按子目录分类组织 YAML 文件，系统递归读取所有子目录
 - ✨ 问题列表按优先级降序排列，高优先级问题优先显示
 - ✨ 应用启动时自动进行数据质量检查，打印详细报告
-- ✨ 新增一键启动脚本（start.bat/start.sh），简化启动流程
-- ✨ 新增快速启动脚本（start_quick.bat/start_quick.sh），提升开发效率
+- ✨ 新增一键启动脚本（start.bat/start.sh），统一使用虚拟环境
 - 🐛 修复 Streamlit ScriptRunContext 警告
 
 **用户体验改进**：
@@ -278,7 +270,7 @@ checklist:
 - 支持按类别（子目录）组织知识库文件
 - 初始化时提供详细的数据质量反馈
 - 区分显示"文件不存在"和"文件存在但加载失败"的引用错误
-- 一键启动，无需手动配置环境
+- 一键启动，自动配置虚拟环境，无需手动操作
 
 #### v1.0.0
 - 初始版本

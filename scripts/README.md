@@ -1,6 +1,6 @@
 # 启动脚本说明
 
-本目录包含运维排查助手的启动脚本，提供多种启动方式。
+本目录包含运维排查助手的启动脚本，统一使用虚拟环境运行。
 
 ## Windows 脚本
 
@@ -26,27 +26,7 @@ scripts\start.bat
 
 ---
 
-### 2. `start_quick.bat` - 快速启动脚本
-**适用场景**: 开发调试，环境已配置好
-
-**功能**:
-- ⚡ 直接启动，跳过环境检查
-- ⚡ 使用系统 Python（无需虚拟环境）
-- ⚡ 快速启动，适合频繁调试
-
-**使用方法**:
-```cmd
-scripts\start_quick.bat
-```
-
-**特点**:
-- 无依赖检查，启动速度快
-- 适合开发环境快速测试
-- 如果依赖缺失会报错
-
----
-
-### 3. `start_venv_auto.bat` - 自动虚拟环境启动
+### 2. `start_venv_auto.bat` - 自动虚拟环境启动
 **适用场景**: 需要完整的虚拟环境管理
 
 **功能**:
@@ -87,19 +67,7 @@ bash scripts/start.sh
 
 ---
 
-### 2. `start_quick.sh` - 快速启动脚本
-**使用方法**:
-```bash
-./scripts/start_quick.sh
-# 或
-bash scripts/start_quick.sh
-```
-
-功能同 Windows 的 `start_quick.bat`
-
----
-
-### 3. `stop_app.sh` - 停止应用
+### 2. `stop_app.sh` - 停止应用
 **使用方法**:
 ```bash
 ./scripts/stop_app.sh
@@ -114,10 +82,12 @@ bash scripts/stop_app.sh
 | 场景 | 推荐脚本 | Windows | Linux/Mac |
 |------|---------|---------|-----------|
 | 首次使用 | 标准启动 | `start.bat` | `start.sh` |
-| 日常开发 | 快速启动 | `start_quick.bat` | `start_quick.sh` |
+| 日常开发 | 标准启动 | `start.bat` | `start.sh` |
 | 生产部署 | 标准启动 | `start.bat` | `start.sh` |
-| 调试测试 | 快速启动 | `start_quick.bat` | `start_quick.sh` |
+| 环境管理 | 完整管理 | `start_venv_auto.bat` | - |
 | 停止应用 | 停止脚本 | `stop_app.bat` | `stop_app.sh` |
+
+> **说明**: 所有启动脚本都使用虚拟环境，确保依赖隔离和环境一致性。
 
 ---
 

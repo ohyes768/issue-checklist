@@ -1,0 +1,46 @@
+status: "测试链接功能"
+describe: "测试wiki、gif、script三种链接的显示"
+priority: 10
+version: "v1.0+"
+display: true
+checklist:
+  - status: "测试多种链接"
+    describe: "这是一个测试项，包含wiki、gif、script三种链接"
+    priority: 10
+    version: "v1.0+"
+    todo: |
+      1. 点击Wiki文档查看详细说明
+      2. 观看GIF演示视频了解操作步骤
+      3. 下载脚本文件进行问题排查
+    wiki_links:
+      - "https://wiki.das-security.cn/pages/viewpage.action?pageId=32212133"
+      - "https://wiki.das-security.cn/pages/viewpage.action?pageId=32212134"
+    gif_links:
+      - "http://10.50.1.141/release/飞遁数据中台/操作指引/数据流排查/创建kibana的查询索引.gif"
+    script_links:
+      - "http://10.50.1.141/scripts/check_yarn_queue.sh"
+      - "http://10.50.1.141/scripts/fix_yarn_queue.py"
+
+  - status: "只有Wiki链接"
+    describe: "测试只包含wiki链接的情况"
+    priority: 5
+    version: "v1.0+"
+    todo: "查看Wiki文档了解详情"
+    wiki_links:
+      - "https://wiki.das-security.cn/pages/viewpage.action?pageId=32212133"
+
+  - status: "只有GIF链接"
+    describe: "测试只包含GIF链接的情况"
+    priority: 5
+    version: "v1.0+"
+    todo: "观看GIF演示视频"
+    gif_links:
+      - "http://10.50.1.141/release/飞遁数据中台/操作指引/数据流排查/创建kibana的查询索引.gif"
+
+  - status: "只有脚本链接"
+    describe: "测试只包含脚本链接的情况"
+    priority: 5
+    version: "v1.0+"
+    todo: "下载并执行脚本"
+    script_links:
+      - "http://10.50.1.141/scripts/test.sh"

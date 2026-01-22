@@ -389,6 +389,34 @@ class WebController:
                         else:
                             st.markdown(line)
 
+            st.markdown("---")
+
+            # 📚 Wiki文档链接
+            if confirmed_item.wiki_links:
+                st.markdown("### 📚 相关文档")
+                for wiki_url in confirmed_item.wiki_links:
+                    from urllib.parse import unquote
+                    decoded_url = unquote(wiki_url)
+                    st.markdown(f'- [{decoded_url}]({wiki_url})', unsafe_allow_html=True)
+
+            # 🎬 GIF演示链接
+            if confirmed_item.gif_links:
+                st.markdown("### 🎬 演示视频")
+                for gif_url in confirmed_item.gif_links:
+                    from urllib.parse import unquote
+                    decoded_url = unquote(gif_url)
+                    st.markdown(f'- [{decoded_url}]({gif_url})', unsafe_allow_html=True)
+
+            # 📜 脚本文件链接
+            if confirmed_item.script_links:
+                st.markdown("### 📜 相关脚本")
+                for script_url in confirmed_item.script_links:
+                    from urllib.parse import unquote
+                    # 提取文件名并解码
+                    script_name = script_url.split("/")[-1] if "/" in script_url else script_url
+                    decoded_name = unquote(script_name)
+                    st.markdown(f'- [{decoded_name}]({script_url})', unsafe_allow_html=True)
+
             # 添加操作按钮
             st.markdown("---")
             if st.button("🔙 返回", key="return_checklist", use_container_width=True,

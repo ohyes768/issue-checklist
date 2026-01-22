@@ -167,6 +167,9 @@ class DataLoader:
             priority=item_data.get('priority', 5),
             version=item_data.get('version', '-'),
             todo=item_data.get('todo', ''),
+            wiki_links=item_data.get('wiki_links'),
+            gif_links=item_data.get('gif_links'),
+            script_links=item_data.get('script_links'),
             checklist=checklist_subitems if checklist_subitems else None,
             refer=item_data.get('refer')
         )

@@ -123,6 +123,9 @@ class TreeBuilder:
                 priority=item.priority,
                 version=item.version,
                 todo=item.todo or "",
+                wiki_links=item.wiki_links or [],
+                gif_links=item.gif_links or [],
+                script_links=item.script_links or [],
                 source_file=parent_file,
                 original_path=path + [item.status],
                 is_refer=False
@@ -159,6 +162,9 @@ class TreeBuilder:
                 priority=refer_issue.priority,
                 version=refer_issue.version,
                 todo="",  # 引用的问题本身没有todo
+                wiki_links=[],  # 引用的问题本身不包含wiki链接
+                gif_links=[],  # 引用的问题本身不包含gif链接
+                script_links=[],  # 引用的问题本身不包含脚本链接
                 source_file=refer_issue.file_name,
                 original_path=path + [refer_name],  # 移除[引用]前缀
                 is_refer=True,

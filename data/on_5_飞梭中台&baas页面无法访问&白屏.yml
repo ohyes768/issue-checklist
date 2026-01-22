@@ -21,3 +21,5 @@ checklist:
        2. 访问nacos页面，http://<ip>:18848/nacos，
        3.登陆后选择命名空间ailpha_zq/，编辑core-prod当中trust_referer参数，追加映射后的IP或者域名，以逗号隔开。
        4. 点击发布，重启auth服务。
+    wiki_links: 
+      - "https://wiki.das-security.cn/pages/viewpage.action?pageId=88313014"

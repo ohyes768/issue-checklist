@@ -32,10 +32,12 @@ checklist:
        3. nodemager/datanode相关节点，容器中ping一下kafka是否通或者telnet kafka直接的端口 如：telnet 1.kafka1 9092 或telnet 1.1.1.1 19091。
 
   - status: "流任务启动时提示错误信息-资源不足"
-    describe: "点击日志/告警引擎 启动/重启，提示流任务资源不足或流计算日志中出现资源不足相关错误，可查看关键字Exception、ERROR等"
+    describe: "点击日志/告警引擎 启动/重启，提示流任务资源不足或流计算日志中出现资源不足相关错误"
     priority: 6
     version: "BaaS-v4.14+"
     todo: "运维账号登录flink监控页面，修改引擎slots数目，引擎最大并发数除以引擎槽位数得到实际占用的taskmanager节点数，申请的taskmanager个数之和要小于实际 yarn节点个数"
+    gif_links: 
+      - "http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%b5%81%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3/%e6%b5%81%e4%bb%bb%e5%8a%a1%e5%90%af%e5%8a%a8%e5%a4%b1%e8%b4%a5-%e8%bf%90%e8%a1%8c%e9%85%8d%e7%bd%ae%e7%a1%ae%e8%ae%a4.gif"
 
   - status: "baasweb、baasflink程序版本不一致"
     describe: "关于 页面查看 BaaS引擎版本：baasweb版本（flink版本），判断是否一致"
@@ -48,6 +50,8 @@ checklist:
     priority: 7
     version: "-"
     todo: "运维账号登录flink监控页面，修改引擎slots数目，引擎最大并发数除以引擎槽位数得到实际占用的taskmanager节点数，申请的taskmanager个数之和要小于实际 yarn节点个数"
+    gif_links: 
+      - "http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%b5%81%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3/%e6%b5%81%e4%bb%bb%e5%8a%a1%e5%90%af%e5%8a%a8%e5%a4%b1%e8%b4%a5-%e8%bf%90%e8%a1%8c%e9%85%8d%e7%bd%ae%e7%a1%ae%e8%ae%a4.gif"
 
 ###TODO
   - status: "探针发送数据使用lz4压缩"

@@ -10,11 +10,14 @@ from typing import List, Optional
 @dataclass
 class ChecklistItem:
     """检查项目数据模型"""
-    status: str           # 直接原因现象描述
-    describe: str         # 详细说明和确认方法
-    priority: int         # 优先级(1-10，数字越大越重要)
-    version: str          # 影响版本范围
-    todo: str            # 解决方案描述
+    status: str  # 直接原因现象描述
+    describe: str  # 详细说明和确认方法
+    priority: int  # 优先级(1-10，数字越大越重要)
+    version: str  # 影响版本范围
+    todo: str  # 解决方案描述
+    wiki_links: Optional[List[str]] = None  # Wiki文档链接列表
+    gif_links: Optional[List[str]] = None  # GIF演示图链接列表
+    script_links: Optional[List[str]] = None  # 脚本文件链接列表
     checklist: Optional[List['ChecklistItem']] = None  # 子checklist
     refer: Optional[str] = None  # 相关问题引用
     excluded: bool = False  # 是否已排除该原因
@@ -59,18 +62,21 @@ class Issue:
 @dataclass
 class TreeChecklistItem:
     """树形检查项数据模型（支持refer引用和树形结构）"""
-    status: str                    # 显示标题
-    describe: str                  # 描述
-    priority: int                  # 优先级
-    version: str                   # 版本
-    todo: str                      # 解决方案
-    source_file: str               # 来源yml文件
-    original_path: List[str]       # 原始路径（用于导航）
+    status: str  # 显示标题
+    describe: str  # 描述
+    priority: int  # 优先级
+    version: str  # 版本
+    todo: str  # 解决方案
+    source_file: str  # 来源yml文件
+    original_path: List[str]  # 原始路径（用于导航）
+    wiki_links: List[str] = field(default_factory=list)  # Wiki文档链接列表
+    gif_links: List[str] = field(default_factory=list)  # GIF演示图链接列表
+    script_links: List[str] = field(default_factory=list)  # 脚本文件链接列表
     children: List['TreeChecklistItem'] = field(default_factory=list)  # 子项
-    is_refer: bool = False         # 是否为refer引用的项
+    is_refer: bool = False  # 是否为refer引用的项
     parent_ref: Optional[str] = None  # 父级引用来源
-    excluded: bool = False         # 是否已排除
-    confirmed: bool = False        # 是否已确认
+    excluded: bool = False  # 是否已排除
+    confirmed: bool = False  # 是否已确认
 
     def get_children_by_priority(self) -> List['TreeChecklistItem']:
         """按优先级降序返回子项"""

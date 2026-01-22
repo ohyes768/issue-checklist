@@ -251,10 +251,38 @@ checklist:
 
 ## 版本信息
 
-- 版本: 1.1.0
+- 版本: 1.2.0
 - 基于: Claude Code 生成
 
 ### 更新日志
+
+#### v1.2.0 (2026-01-22)
+**功能增强**：
+- ✨ 新增解决方案链接支持，可在YAML中添加Wiki文档、GIF演示视频、脚本文件链接
+- ✨ 数据模型增强：ChecklistItem和TreeChecklistItem添加 `wiki_links`、`gif_links`、`script_links` 三个字段
+- ✨ 解决方案面板新增三个链接区域：📚 相关文档、🎬 演示视频、📜 相关脚本
+- ✨ URL自动解码功能，将URL编码的中文路径转换为可读的中文显示
+- ✨ 支持多个链接，每个字段可配置多个URL地址
+
+**用户体验改进**：
+- 解决方案页面信息更丰富，可直接点击查看相关文档和资源
+- 中文链接显示，提升URL可读性
+- 一键访问Wiki文档、演示视频和脚本文件
+
+**YAML数据格式示例**：
+```yaml
+status: "流任务启动时提示错误信息-资源不足"
+describe: "点击日志/告警引擎启动/重启，提示流任务资源不足"
+priority: 6
+version: "BaaS-v4.14+"
+todo: "运维账号登录flink监控页面，修改引擎slots数目"
+wiki_links:
+  - "https://wiki.das-security.cn/pages/viewpage.action?pageId=32212133"
+gif_links:
+  - "http://10.50.1.141/release/飞遁数据中台/操作指引/流任务相关/演示.gif"
+script_links:
+  - "http://10.50.1.141/scripts/check_resource.sh"
+```
 
 #### v1.1.0 (2026-01-21)
 **功能增强**：

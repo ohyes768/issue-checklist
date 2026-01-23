@@ -10,7 +10,7 @@ checklist:
     todo: "ambari启动对应停止的kafka节点。或者登录后台docker restart 对应的kafka节点，如重启之后还是不行，需要联系运维团队进行处理。" 
     
   - status: "kafka主题消费异常"
-    describe: "后台"
+    describe: "后台登录kafka容器中，执行kafka消费命令是否报错"
     priority: 8
     version: "-"
     todo: >

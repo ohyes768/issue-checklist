@@ -1,14 +1,14 @@
 status: "数据留存相关"
-describe: "-"
+describe: "大数据界面上设置的数据清理阈值达到阈值之后未清理"
 display: true
 priority: 1
 version: "-"
 checklist: 
   - refer: "集群磁盘分布不均匀"
   - status: "数据清理未生效"
-    describe: "cece"
-    priority: 10
+    describe: "界面查看数据清理阈值是否达到阈值，达到阈值后未进行数据清理，磁盘占用超过了界面设置的阈值"
+    priority: 5
     version: "-"
-    todo: ""
-
-
+    todo: >
+       1. 登录kibana上查看存储数据比较大的索引，如果是告警、指标、异常记录的索引是不会清理的，需要手动清理。
+       2. 后台 du -sh /data/*查看占用磁盘比较大的文件，界面设置的阈值只是针对es的数据进行清理，其他后台组件占用的不会清理。

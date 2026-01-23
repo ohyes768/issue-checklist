@@ -1,4 +1,4 @@
-status: "飞梭中台/baas页面无法访问、白屏"
+status: "飞梭中台&baas页面无法访问、白屏"
 describe: "后台执行 \"docker ps -a | grep baas\"，查看状态为starting"
 display: true
 priority: 5
@@ -7,10 +7,13 @@ checklist:
   - refer: "yarn节点异常&kafka节点异常"
   - status: "数据库流任务相关表迁移后存在脏数据"
     describe: "查看baas日志，日志报错 \"flink下yaml配置文件中尽量不要使用空值，请把默认值写上\""
-    priority: 2
+    priority: 3
     version: "-"
-    url: "https://wiki.das-security.cn/pages/viewpage.action?pageId=88313008"
-    todo: "后台命令进入Mysql/PG/HG，清理baas_monitor 数据库中pipeline相关表 按照顺序依次清理以下表：delete from t_pipeline_dbconfig;delete from t_pipeline_dbmetric;delete from t_flink_pipeline;delete from t_solution_user_bool_info;delete from t_solution;"
+    todo: >
+      后台命令进入Mysql/PG/HG，清理baas_monitor 数据库中pipeline相关表 按照顺序依次清理以下表：delete from t_pipeline_dbconfig;delete from t_pipeline_dbmetric;delete from t_flink_pipeline;delete from t_solution_user_bool_info;delete from t_solution; 
+      查看Wiki文档了解详情
+    wiki_links:
+       - "https://wiki.das-security.cn/pages/viewpage.action?pageId=88313008"
 
   - status: "配置域名访问后未修改trust_refer"
     describe: "查看auth日志，日志报错 \"存在host头攻击风险，禁止访问\""

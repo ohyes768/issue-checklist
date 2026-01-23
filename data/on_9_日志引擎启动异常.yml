@@ -30,7 +30,8 @@ checklist:
        1. 5.2 之前版本，使用 tools/下面delete相关脚本重建kafka topic，删除之后，重启baas重建topic。
        2. 5.2之后，运维管理界面，kafka监控--topic监控页面，点击重建内置topic。
        3. nodemager/datanode相关节点，容器中ping一下kafka是否通或者telnet kafka直接的端口 如：telnet 1.kafka1 9092 或telnet 1.1.1.1 19091。
-
+    gif_links:
+        - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%b5%81%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3/%e7%95%8c%e9%9d%a2%e4%b8%8b%e8%bd%bd%e6%b5%81%e8%ae%a1%e7%ae%97%e4%bb%bb%e5%8a%a1%e6%97%a5%e5%bf%97&%e9%94%99%e8%af%af%e4%bf%a1%e6%81%af%e6%a3%80%e7%b4%a2.gif
   - status: "流任务启动时提示错误信息-资源不足"
     describe: "点击日志/告警引擎 启动/重启，提示流任务资源不足或流计算日志中出现资源不足相关错误"
     priority: 6

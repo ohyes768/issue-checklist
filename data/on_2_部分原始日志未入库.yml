@@ -9,13 +9,16 @@ checklist:
     priority: 10
     version: "-"
     todo: "修改探针(soc/apt/其他）的数据发送格式为utf-8" 
+    gif_links:
+       - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%b5%81%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3/%e5%90%8e%e5%8f%b0%e4%b8%8b%e8%bd%bd%e6%b5%81%e4%bb%bb%e5%8a%a1%e6%97%a5%e5%bf%97&%e9%94%99%e8%af%af%e4%bf%a1%e6%81%af%e6%a3%80%e7%b4%a2.gif
 
   - status: "探针发送的字段名存在特殊字符"
     describe: "查询日志引擎相关日志，检索Exception出现\"mapper_parsing_exception\",\"failed to parse\""
     priority: 5
     version: "5.0之前"
     todo: "1. 探针禁止soc.ip 等嵌套字段发送 2. 建议升级5.0版本以上"  
-
+    gif_links:
+        - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%b5%81%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3/%e5%90%8e%e5%8f%b0%e4%b8%8b%e8%bd%bd%e6%b5%81%e4%bb%bb%e5%8a%a1%e6%97%a5%e5%bf%97&%e9%94%99%e8%af%af%e4%bf%a1%e6%81%af%e6%a3%80%e7%b4%a2.gif
   - status: "Es 索引mapping超过限制"
     describe: "1.查询日志引擎相关日志，检索Exception出现，2.登录kibana，创建日志/流量相关index patterns，创建完成后查看Fields数目, >1000 "
     priority: 4
@@ -23,6 +26,8 @@ checklist:
     todo: >
       1.登录kibana，设置相关索引mapping上限，devtools执行命令：PUT ailpha-baas-log-*/_settings{ \"index.mapping.total_fields.limit\": 2000 } 
       2. 建议升级5.0版本以上"  
+    gif_links:
+    - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%b5%81%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3/%e5%90%8e%e5%8f%b0%e4%b8%8b%e8%bd%bd%e6%b5%81%e4%bb%bb%e5%8a%a1%e6%97%a5%e5%bf%97&%e9%94%99%e8%af%af%e4%bf%a1%e6%81%af%e6%a3%80%e7%b4%a2.gif
 
   - status: "数据中无machineCode字段"
     describe: "飞梭数据中台运维账号登录，查看kafka监控，检查kafka原始日志数据中是否存在machineCode字段"

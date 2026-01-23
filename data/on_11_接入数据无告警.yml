@@ -1,0 +1,24 @@
+status: "接入数据无告警"
+describe: "数据发送设备平台上可以查询到告警，大数据平台上查不到告警"
+display: true
+priority: 8
+version: "-"
+checklist:
+  - refer: "日志引擎启动异常"
+  - status: "部分数据无告警"
+    describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
+    priority: 8
+    version: "-"
+    todo: >
+      1. 界面上查询对应的日志，复制json格式到数据流排查页面检测模型是否能正常触发模型。如检测流程正常，需要查看触发模型是否开启告警。有些模型出厂设置是只开异常记录。
+      2. 检查白名单是否有配置满足该类数据的过滤条件。5.0之后版本可以通过数据流排查那边查看。
+      3. 检查数据中是否有machineCode字段。
+      4. 数据流排查页面显示不能触发模型，需要联系分析团队进行排查。
+      5. 消费devicealarm topic中查看是否有对应数据发送过来。
+    gif_links:
+       - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%95%b0%e6%8d%ae%e6%b5%81%e6%8e%92%e6%9f%a5/%e6%95%b0%e6%8d%ae%e6%8e%92%e6%9f%a5%e9%a1%b5%e9%9d%a2%e6%a3%80%e6%b5%8b.gif
+  - status: "soc/apt数据发送配置 非utf-8格式"
+    describe: "查询日志引擎相关日志，检索Exception出现\"JsonParseException: Invalid UTF-8 start byte 0xb0\""
+    priority: 10
+    version: "-"
+    todo: "修改探针(soc/apt/其他）的数据发送格式为utf-8" 

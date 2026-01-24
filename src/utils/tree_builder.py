@@ -113,36 +113,35 @@ class TreeBuilder:
     def _build_child_tree(self, item: ChecklistItem, parent_file: str, path: List[str]) -> Optional[TreeChecklistItem]:
         """构建子树"""
         if hasattr(item, 'refer') and item.refer:
-            # 处理refer引用
             return self._build_refer_tree(item.refer, parent_file, path)
-        else:
-            # 处理普通项
-            tree_item = TreeChecklistItem(
-                status=item.status,
-                describe=item.describe,
-                priority=item.priority,
-                version=item.version,
-                todo=item.todo or "",
-                wiki_links=item.wiki_links or [],
-                gif_links=item.gif_links or [],
-                script_links=item.script_links or [],
-                source_file=parent_file,
-                original_path=path + [item.status],
-                is_refer=False
-            )
 
-            # 递归处理子项
-            if hasattr(item, 'checklist') and item.checklist:
-                for child_item in item.checklist:
-                    child_tree = self._build_child_tree(child_item, parent_file, path + [item.status])
-                    if child_tree:
-                        tree_item.children.append(child_tree)
+        # 处理普通项
+        tree_item = TreeChecklistItem(
+            status=item.status,
+            describe=item.describe,
+            priority=item.priority,
+            version=item.version,
+            todo=item.todo or "",
+            wiki_links=item.wiki_links,
+            gif_links=item.gif_links,
+            script_links=item.script_links,
+            source_file=parent_file,
+            original_path=path + [item.status],
+            is_refer=False
+        )
 
-            return tree_item
+        # 递归处理子项
+        if hasattr(item, 'checklist') and item.checklist:
+            new_path = path + [item.status]
+            for child_item in item.checklist:
+                child_tree = self._build_child_tree(child_item, parent_file, new_path)
+                if child_tree:
+                    tree_item.children.append(child_tree)
+
+        return tree_item
 
     def _build_refer_tree(self, refer_name: str, parent_file: str, path: List[str]) -> Optional[TreeChecklistItem]:
         """构建引用树"""
-        # 检查循环引用
         if refer_name in self.building_stack:
             print(f"警告: 在引用中检测到循环: {' → '.join(list(self.building_stack) + [refer_name])}")
             return None
@@ -152,28 +151,26 @@ class TreeBuilder:
             print(f"警告: 未找到引用的问题 '{refer_name}'")
             return None
 
-        # 添加到构建栈
         self.building_stack.add(refer_name)
         try:
-            # 创建引用节点
+            new_path = path + [refer_name]
             refer_tree = TreeChecklistItem(
                 status=refer_issue.status,
                 describe=refer_issue.describe,
                 priority=refer_issue.priority,
                 version=refer_issue.version,
-                todo="",  # 引用的问题本身没有todo
-                wiki_links=[],  # 引用的问题本身不包含wiki链接
-                gif_links=[],  # 引用的问题本身不包含gif链接
-                script_links=[],  # 引用的问题本身不包含脚本链接
+                todo="",
+                wiki_links=[],
+                gif_links=[],
+                script_links=[],
                 source_file=refer_issue.file_name,
-                original_path=path + [refer_name],  # 移除[引用]前缀
+                original_path=new_path,
                 is_refer=True,
                 parent_ref=parent_file
             )
 
-            # 递归构建引用问题的子项
             for item in refer_issue.checklist:
-                child_tree = self._build_child_tree(item, refer_issue.file_name, path + [refer_name])  # 移除[引用]前缀
+                child_tree = self._build_child_tree(item, refer_issue.file_name, new_path)
                 if child_tree:
                     refer_tree.children.append(child_tree)
 

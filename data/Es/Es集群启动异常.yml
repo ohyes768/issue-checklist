@@ -11,3 +11,4 @@ checklist:
     todo: >
        1.后台Es容器中 通过 curl http://localhost:9200/_cat/nodes?v查看启动的节点，没有返回的节点说明没有启动成功。
        2.登录到未启动的节点，查看es日志:tail -200f /data/var/log/elasticsearch/es_1.server1.log,日志报错信息为:Caused by:java.io.IOException:failed to read /data/elasticsearch/nodes/inices/XXX/XX/xx.st 说明这个文件有损坏，需要到指定目录下删除该文件，删除之后再看看日志是否有其他的报错，直到节点启动成功
+    

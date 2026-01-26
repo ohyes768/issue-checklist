@@ -1,12 +1,37 @@
 status: "集群磁盘分布不均匀"
 describe: "查看服务器磁盘大小，使用df -h查看"
+display: false
 priority: 5
 version: "-"
 checklist:
-  - status: "磁盘大小不一致"
+  - status: "磁盘大小不一致-mysql版本"
     describe: "到es容器中，使用curl http://localhost:9200/_cat/allocation?v查看最大磁盘与最小的磁盘之间相差几T或几十T"
     priority: 6
     version: "-"
     todo: >
-       1.旧版本需要修改数据库中的配置:
-       2. 新版本可以数据配置界面进行查看并修改：
+       需要修改数据库中的配置: a. 进入1.basic1 b.登录mysql，切换baas_monitor c.更改磁盘判断阈值，设置超过当前环境最大差异,判断最大差异可以通过es命令:curl 1.es1:9200/_cat/allocation?v\&s=node:asc，可以通过disk.total列查看es所在的每台主机的磁盘大小,最大GB差异计算：最大主机GB - 最小主机GB最大百分比差异计算：(最大主机GB - 最小主机GB) / 最小主机GB达到任意一个阈值就会切换磁盘清理模式：磁盘使用率最小的主机达到阈值才进行清理
+       （防止运维扩容时磁盘分区错误分到很小的磁盘，导致数据全部被清理),下面操作步骤参考wiki文档。
+    wiki_links:
+       - https://wiki.das-security.cn/pages/viewpage.action?pageId=102317020
+
+  - status: "磁盘大小不一致-pg版本"
+    describe: "到es容器中，使用curl http://localhost:9200/_cat/allocation?v查看最大磁盘与最小的磁盘之间相差几T或几十T"
+    priority: 6
+    version: "-"
+    todo: >
+        更改磁盘判断阈值，设置超过当前环境最大差异,判断最大差异可以通过es命令:curl 1.es1:9200/_cat/allocation?v\&s=node:asc，可以通过disk.total列查看es所在的每台主机的磁盘大小,最大GB差异计算：最大主机GB - 最小主机GB最大百分比差异计算：(最大主机GB - 最小主机GB) / 最小主机GB达到任意一个阈值就会切换磁盘清理模式：磁盘使用率最小的主机达到阈值才进行清理
+        （防止运维扩容时磁盘分区错误分到很小的磁盘，导致数据全部被清理): 进入1.postgres1/1-postgres-1容器，psql -U dbapp -d postgres,输入密码.下面操作步骤参考wiki文档。
+    wiki_links:
+       - https://wiki.das-security.cn/pages/viewpage.action?pageId=102317020
+  - status: "磁盘大小不一致-hg版本"
+    describe: "到es容器中，使用curl http://localhost:9200/_cat/allocation?v查看最大磁盘与最小的磁盘之间相差几T或几十T"
+    priority: 6
+    version: "-"
+    todo: >
+         1. 更改磁盘判断阈值，设置超过当前环境最大差异,判断最大差异可以通过es命令:curl 1.es1:9200/_cat/allocation?v\&s=node:asc，可以通过disk.total列查看es所在的每台主机的磁盘大小,最大GB差异计算：最大主机GB - 最小主机GB最大百分比差异计算：(最大主机GB - 最小主机GB) / 最小主机GB达到任意一个阈值就会切换磁盘清理模式：磁盘使用率最小的主机达到阈值才进行清理
+         （防止运维扩容时磁盘分区错误分到很小的磁盘，导致数据全部被清理): 1-hgdb-1容器，psql -U sysdba -d highgo,输入密码。下面操作步骤参考wiki文档。
+         2. 新版本可以数据配置界面进行查看并修改：登录大数据界面，数据配置页面，按ctrl+?键查看配置并进行修改。请查看视频操作步骤。
+    wiki_links:
+       - https://wiki.das-security.cn/pages/viewpage.action?pageId=102317020
+    gif_links:
+       - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/es%e7%9b%b8%e5%85%b3/%e3%80%90%e6%95%b0%e6%8d%ae%e9%85%8d%e7%bd%ae%e3%80%91%e4%bf%ae%e6%94%b9%e7%a3%81%e7%9b%98%e6%b8%85%e7%90%86%e6%a8%a1%e5%bc%8f.gif

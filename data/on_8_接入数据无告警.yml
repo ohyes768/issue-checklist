@@ -1,0 +1,57 @@
+status: "接入数据无告警"
+describe: "数据发送设备平台上可以查询到告警，大数据平台上查不到告警"
+display: true
+priority: 8
+version: "-"
+checklist:
+  - refer: "日志引擎启动异常"
+  - status: "部分数据无告警--模型未开启"
+    describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
+    priority: 8
+    version: "-"
+    todo: >
+      界面上查询对应的日志，复制json格式到数据流排查页面检测模型是否能正常触发模型。如检测流程正常，需要查看触发模型是否开启告警。有些模型出厂设置是只开异常记录。
+    gif_links:
+       - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%95%b0%e6%8d%ae%e6%b5%81%e6%8e%92%e6%9f%a5/%e6%95%b0%e6%8d%ae%e6%8e%92%e6%9f%a5%e9%a1%b5%e9%9d%a2%e6%a3%80%e6%b5%8b.gif
+      
+  - status: "部分数据无告警--白名单/数据清洗过滤"
+    describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
+    priority: 8
+    version: "-"
+    todo: >
+      检查白名单是否有配置满足该类数据的过滤条件。5.0之后版本可以通过数据流排查那边查看。
+      
+  - status: "部分数据无告警--数据中无machineCode字段"
+    describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
+    priority: 8
+    version: "-"
+    todo: >
+      检查数据中是否有machineCode字段。无machinecode需要找数据发送设备的人进行处理。
+     
+  - status: "部分数据无告警--数据触发不了模型"
+    describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
+    priority: 8
+    version: "-"
+    todo: >
+       数据流排查页面显示不能触发模型，需要联系分析团队进行排查。
+
+  - status: "部分数据无告警--消费devicealarm topic中的数据"
+    describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
+    priority: 8
+    version: "-"
+    todo: >
+       消费devicealarm topic中查看是否有对应数据发送过来。
+    gif_links:
+      - http://10.50.1.141/release/%E9%A3%9E%E6%A2%AD%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0/%E6%93%8D%E4%BD%9C%E6%8C%87%E5%BC%95/%e6%95%b0%e6%8d%ae%e6%b5%81%e6%8e%92%e6%9f%a5/%e5%90%8e%e5%8f%b0%e6%b6%88%e8%b4%b9kafka%e7%9a%84%e6%95%b0%e6%8d%ae(5.2%e4%b9%8b%e5%89%8d).gif
+      - http://10.50.1.141/release/%E9%A3%9E%E6%A2%AD%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0/%E6%93%8D%E4%BD%9C%E6%8C%87%E5%BC%95/%e6%95%b0%e6%8d%ae%e6%b5%81%e6%8e%92%e6%9f%a5/%e5%90%8e%e5%8f%b0%e6%b6%88%e8%b4%b9kafka%e7%9a%84%e6%95%b0%e6%8d%ae(5.2%e4%b9%8b%e5%90%8e).gif
+  - status: "部分数据无告警--组织架构数据源挂载"
+    describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
+    priority: 8
+    version: "-"
+    todo: >
+       检查数据源是否挂载。开启多机构视角的情况，需要检查数据源是否挂载。      
+  - status: "soc/apt数据发送配置 非utf-8格式"
+    describe: "查询日志引擎相关日志，检索Exception出现\"JsonParseException: Invalid UTF-8 start byte 0xb0\""
+    priority: 8
+    version: "-"
+    todo: "修改探针(soc/apt/其他）的数据发送格式为utf-8" 

@@ -1,5 +1,6 @@
 status: "定时任务服务存在异常"
 describe: "登录大数据界面，定任务界面查看"
+display: false
 priority: 5
 version: "-"
 checklist:

@@ -4,7 +4,7 @@ display: true
 priority: 8
 version: "-"
 checklist:
-  - refer: "日志引擎启动异常"
+  - refer: "告警引擎启动异常"
   - status: "部分数据无告警--模型未开启"
     describe: "apt/soc/其他设备发送过来的数据，部分告警数据在大数据平台上不显示，能在原始日志中查到"
     priority: 8

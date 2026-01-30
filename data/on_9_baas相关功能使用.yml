@@ -1,0 +1,9 @@
+status: "baas相关功能使用"
+describe: "查看kafka接入数据量、流任务处理速度、数据流排查使用"
+priority: 10
+version: "-"
+display: true
+checklist:
+  - refer: "接入数据数量"
+  - refer: "流任务处理速度"
+  - refer: "数据流排查使用"

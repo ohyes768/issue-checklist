@@ -1,6 +1,7 @@
 status: "接入数据数量"
 describe: "登录大数据界面，kafka监控页面，topic监控或信息监控页面查看kafka入库速度曲线"
 priority: 8
+display: false
 version: "-"
 checklist: 
    - status: "查看接入kafka数据量"

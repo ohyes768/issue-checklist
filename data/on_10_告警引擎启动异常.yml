@@ -1,5 +1,5 @@
-status: "日志引擎启动异常"
-describe: "点击日志/告警引擎 启动/重启，未启动成功，任务启动5分钟后failed"
+status: "告警引擎启动异常"
+describe: "点击告警引擎 启动/重启，未启动成功，任务启动5分钟后failed"
 priority: 10
 display: true
 version: "-"
@@ -13,7 +13,17 @@ checklist:
     priority: 9
     version: "-"
     todo: "登录nodemanager/datanode相关节点，执行safemode退出命令，hdfs dfsadmin -safemode leave"
-
+###TODO
+  - status: "fullLinkSync算子报错导致引擎异常"
+    describe: "界面点击告警分析引擎详情,查看rootException报错出现\"fullLinkSync\"相关的报错"
+    priority: 6
+    version: "-"
+    todo: >
+       1.flink监控，告警分析引擎检查fullLinkSync这条流对应的kafkasink配置的地址是否能正常联通。
+       2. 检查baasweb容器中：docker exec -ti 1-baas-1 bash，检查/usr/hdp/2.5.3.0-37/baas/baasweb/input目录下zh_CN目录下是否有规则相关文件。有就重启一下baas：docker restart 1-baas-1,没有需要上传与界面版本一致的规则包到该目录下解压之后重启baas。
+       3. 重启流任务。
+    gif_links:
+      - http://10.50.1.141/release/%e9%a3%9e%e6%a2%ad%e6%95%b0%e6%8d%ae%e4%b8%ad%e5%8f%b0/%e6%93%8d%e4%bd%9c%e6%8c%87%e5%bc%95/%e6%b5%81%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3/%e6%b5%81%e4%bb%bb%e5%8a%a1%e9%87%8d%e5%90%af%e6%9f%a5%e7%9c%8brootException.gif
 ###TODO
   - status: "kafka topic存在异常"
     describe: "1. 流计算任务日志中有kafka topic相关错误，可查看的关键字有dead、Exception、ERROR. /n 2.登录飞梭平台kafka监控页面，查看kafka topic详情，出现leader=-1或isr为null的情况 "

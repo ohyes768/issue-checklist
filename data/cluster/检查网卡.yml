@@ -1,5 +1,6 @@
 status: "检查网卡"
 describe: "登录服务器后台，查看网卡是否有瓶颈"
+display: false
 priority: 6
 version: "-"
 checklist: 

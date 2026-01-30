@@ -2,7 +2,7 @@ status: "数据流排查使用"
 describe: "怎么使用数据流排查"
 priority: 8
 version: "-"
-display: true
+display: false
 checklist:
   - status: "复制数据"
     describe: "怎么复制对应的数据"

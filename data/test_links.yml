@@ -2,7 +2,7 @@ status: "测试链接功能"
 describe: "测试wiki、gif、script三种链接的显示"
 priority: 10
 version: "v1.0+"
-display: true
+display: false
 checklist:
   - status: "测试多种链接"
     describe: "这是一个测试项，包含wiki、gif、script三种链接"

@@ -1,0 +1,15 @@
+status: "告警延迟"
+describe: "大数据界面上查看告警中开始时间和采集器接收时间相差比较大"
+priority: 6
+version: "-"
+display: true
+checklist:
+  - refer: "机器负载过高"
+  - refer: "检查网卡"
+  - status: "数据配置错误"
+    describe: "检查探针数据发送到devicealarm这个topic中的数据配置"
+    priority: 6
+    version: "-"
+    todo: >
+      1. 检查soc/ailog 数据发送配置，devicealarm这个topic中发送的数据要配置告警级别大于等于3的数据，否则就是发送的数据有问题。
+      2. 检查apt数据发送设备，数据发送devicealarm这个topic中的只发送风险信息。其他的都不要配置。

@@ -1,6 +1,7 @@
 status: "kafka节点异常"
 describe: "查看kafka集群监控页面，存在异常的kafka节点"
 priority: 7
+display: false
 version: "-"
 checklist:
   - status: "kafka服务进程异常"

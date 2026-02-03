@@ -1,5 +1,6 @@
 status: "流任务处理速度"
 describe: "登录大数据界面，查看流任务处理速度"
+display: false
 priority: 8
 version: "-"
 checklist: 

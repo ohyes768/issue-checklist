@@ -1,6 +1,7 @@
 status: "yarn节点异常"
 describe: "登录18088页面进行查看，查看在线节点以及lost node节点数量大于0"
 priority: 10
+display: false
 version: "-"
 checklist:
   - status: "yarn节点所在磁盘占用>=90%"

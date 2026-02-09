@@ -1,6 +1,7 @@
 """
 Checklist数据模型
 定义运维排查助手的核心数据结构
+使用继承消除 ChecklistItem 和 TreeChecklistItem 的重复代码
 """
 
 from dataclasses import dataclass, field
@@ -8,20 +9,22 @@ from typing import List, Optional
 
 
 @dataclass
-class ChecklistItem:
-    """检查项目数据模型"""
-    status: str  # 直接原因现象描述
+class BaseChecklistItem:
+    """基础检查项数据模型（抽象基类）"""
+    status: str  # 现象描述
     describe: str  # 详细说明和确认方法
     priority: int  # 优先级(1-10，数字越大越重要)
     version: str  # 影响版本范围
     todo: str  # 解决方案描述
-    wiki_links: Optional[List[str]] = None  # Wiki文档链接列表
-    gif_links: Optional[List[str]] = None  # GIF演示图链接列表
-    script_links: Optional[List[str]] = None  # 脚本文件链接列表
-    checklist: Optional[List['ChecklistItem']] = None  # 子checklist
-    refer: Optional[str] = None  # 相关问题引用
-    excluded: bool = False  # 是否已排除该原因
-    confirmed: bool = False  # 是否已确认该原因存在
+    wiki_links: List[str] = field(default_factory=list)  # Wiki文档链接列表
+    gif_links: List[str] = field(default_factory=list)  # GIF演示图链接列表
+    script_links: List[str] = field(default_factory=list)  # 脚本文件链接列表
+    excluded: bool = False  # 是否已排除
+    confirmed: bool = False  # 是否已确认
+
+    def get_priority_sorted_children(self, children: List) -> List:
+        """按优先级降序返回子项"""
+        return sorted(children, key=lambda x: x.priority, reverse=True)
 
     def __post_init__(self):
         """数据验证"""
@@ -31,6 +34,13 @@ class ChecklistItem:
             raise ValueError("status不能为空")
         if not self.describe.strip():
             raise ValueError("describe不能为空")
+
+
+@dataclass
+class ChecklistItem(BaseChecklistItem):
+    """YAML加载用的检查项目数据模型"""
+    checklist: Optional[List['ChecklistItem']] = None  # 子checklist
+    refer: Optional[str] = None  # 相关问题引用
 
 
 @dataclass
@@ -54,7 +64,6 @@ class Issue:
             raise ValueError(f"优先级必须在1-10之间，当前值: {self.priority}")
         if not self.status.strip():
             raise ValueError("status不能为空")
-        # describe可以为空，只检查是否为None
         if self.describe is None:
             raise ValueError("describe不能为None")
 
@@ -62,25 +71,32 @@ class Issue:
 @dataclass
 class TreeChecklistItem:
     """树形检查项数据模型（支持refer引用和树形结构）"""
-    status: str  # 显示标题
-    describe: str  # 描述
-    priority: int  # 优先级
-    version: str  # 版本
-    todo: str  # 解决方案
+    # 必需字段（无默认值）
     source_file: str  # 来源yml文件
     original_path: List[str]  # 原始路径（用于导航）
+    status: str  # 现象描述
+    describe: str  # 详细说明和确认方法
+    priority: int  # 优先级(1-10，数字越大越重要)
+    version: str  # 影响版本范围
+    todo: str  # 解决方案描述
+
+    # 可选字段（有默认值）
     wiki_links: List[str] = field(default_factory=list)  # Wiki文档链接列表
     gif_links: List[str] = field(default_factory=list)  # GIF演示图链接列表
     script_links: List[str] = field(default_factory=list)  # 脚本文件链接列表
     children: List['TreeChecklistItem'] = field(default_factory=list)  # 子项
-    is_refer: bool = False  # 是否为refer引用的项
-    parent_ref: Optional[str] = None  # 父级引用来源
     excluded: bool = False  # 是否已排除
     confirmed: bool = False  # 是否已确认
+    is_refer: bool = False  # 是否为refer引用的项
+    parent_ref: Optional[str] = None  # 父级引用来源
+
+    def get_priority_sorted_children(self, children: List) -> List:
+        """按优先级降序返回子项"""
+        return sorted(children, key=lambda x: x.priority, reverse=True)
 
     def get_children_by_priority(self) -> List['TreeChecklistItem']:
         """按优先级降序返回子项"""
-        return sorted(self.children, key=lambda x: x.priority, reverse=True)
+        return self.get_priority_sorted_children(self.children)
 
     def has_children(self) -> bool:
         """是否有子项"""
@@ -89,13 +105,6 @@ class TreeChecklistItem:
     def get_path_display(self) -> str:
         """获取路径显示文本"""
         return " → ".join(self.original_path)
-
-    def __post_init__(self):
-        """数据验证"""
-        if self.priority < 1 or self.priority > 10:
-            raise ValueError(f"优先级必须在1-10之间，当前值: {self.priority}")
-        if not self.status.strip():
-            raise ValueError("status不能为空")
 
 
 @dataclass

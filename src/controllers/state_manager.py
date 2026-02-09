@@ -16,15 +16,18 @@ class StateManager:
         self.tree_builder = tree_builder
         self.state = AppState()
 
+    def _clear_navigating_state(self):
+        """清除导航状态（统一的状态清理操作）"""
+        self.state.solution_text = None
+        self.state.confirmed_item = None
+
     def set_current_issue(self, issue_name: str) -> bool:
         """设置当前问题"""
         try:
-            # 构建完整的树形结构
             tree = self.tree_builder.build_complete_tree(issue_name)
             if not tree:
                 return False
 
-            # 获取Issue对象
             issue = self.tree_builder.data_loader.get_issue_by_name(issue_name)
             if not issue:
                 return False
@@ -32,11 +35,10 @@ class StateManager:
             self.state.current_issue = issue
             self.state.current_issue_name = issue_name
             self.state.current_tree = tree
-            self.state.current_checklist = None  # 重置到根节点
-            self.state.navigation_path = [issue_name]  # 简化的路径，只包含问题名
-            self.state.solution_text = None
+            self.state.current_checklist = None
+            self.state.navigation_path = [issue_name]
             self.state.excluded_items.clear()
-            self.state.confirmed_item = None  # 重置已确认项目
+            self._clear_navigating_state()
 
             return True
         except Exception as e:
@@ -46,31 +48,22 @@ class StateManager:
     def navigate_to_child(self, child_item: TreeChecklistItem) -> Tuple[bool, Optional[str]]:
         """导航到子节点"""
         try:
-            # 无论是否有子节点，都更新当前节点为该检查项
             self.state.current_checklist = child_item
 
-            # 构建简单的导航路径（只保存status名称）
-            current_path = []
-            current_issue_name = self.state.current_issue_name
-
-            # 添加根节点（问题名）
-            if current_issue_name:
-                current_path.append(current_issue_name)
-
-            # 添加从根到当前节点的所有检查项名称
+            # 构建导航路径
+            current_path = [self.state.current_issue_name] if self.state.current_issue_name else []
             if child_item.original_path:
-                current_path.extend(child_item.original_path[1:])  # 跳过根节点，只添加检查项
+                current_path.extend(child_item.original_path[1:])
 
             self.state.navigation_path = current_path
 
-            if not child_item.has_children():
-                # 没有子节点，显示解决方案
+            # 根据是否有子节点决定行为
+            if child_item.has_children():
+                self._clear_navigating_state()
+                return True, None
+            else:
                 self.state.solution_text = child_item.todo
                 return True, child_item.todo
-            else:
-                # 有子节点，清除解决方案，继续排查
-                self.state.solution_text = None
-                return True, None
 
         except Exception as e:
             print(f"导航到子节点失败: {e}")
@@ -79,26 +72,21 @@ class StateManager:
     def navigate_to_parent(self) -> bool:
         """导航到父节点"""
         if len(self.state.navigation_path) <= 1:
-            return False  # 已经在根节点
+            return False
 
         try:
-            # 移除当前节点
             self.state.navigation_path.pop()
 
-            # 查找父节点
-            if self.state.current_tree:
-                parent_item = self.tree_builder.find_node_by_path(
-                    self.state.current_tree,
-                    self.state.navigation_path
-                )
+            parent_item = self.tree_builder.find_node_by_path(
+                self.state.current_tree,
+                self.state.navigation_path
+            )
 
-                if parent_item:
-                    self.state.current_checklist = parent_item
-                    self.state.solution_text = None
-                    # 清除已确认项目，确保右侧区域同步返回到checklist列表
-                    self.state.confirmed_item = None
-                    print(f"导航到父节点，清除已确认项目，当前路径: {self.state.navigation_path}")
-                    return True
+            if parent_item:
+                self.state.current_checklist = parent_item
+                self._clear_navigating_state()
+                print(f"导航到父节点，当前路径: {self.state.navigation_path}")
+                return True
 
             return False
         except Exception as e:
@@ -115,10 +103,8 @@ class StateManager:
             if target_node:
                 self.state.navigation_path = path.copy()
                 self.state.current_checklist = target_node
-                self.state.solution_text = None
-                # 清除已确认项目，确保右侧区域同步更新
-                self.state.confirmed_item = None
-                print(f"导航到指定路径，清除已确认项目，新路径: {self.state.navigation_path}")
+                self._clear_navigating_state()
+                print(f"导航到指定路径，新路径: {self.state.navigation_path}")
                 return True
 
             return False
@@ -133,10 +119,8 @@ class StateManager:
 
         self.state.current_checklist = None
         self.state.navigation_path = [self.state.current_issue_name] if self.state.current_issue_name else []
-        self.state.solution_text = None
-        # 清除已确认项目，确保右侧区域同步返回到根状态
-        self.state.confirmed_item = None
-        print(f"导航到根节点，清除已确认项目")
+        self._clear_navigating_state()
+        print(f"导航到根节点")
         return True
 
     def exclude_item(self, item: TreeChecklistItem) -> bool:

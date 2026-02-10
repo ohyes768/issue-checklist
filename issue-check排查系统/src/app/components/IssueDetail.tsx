@@ -1,7 +1,7 @@
 import { CheckItem } from '@/app/types/knowledge-base';
 import { Badge } from '@/app/components/ui/badge';
 import { Card } from '@/app/components/ui/card';
-import { ExternalLink, FileCode, Image as ImageIcon, Book, AlertCircle, Home } from 'lucide-react';
+import { ExternalLink, Home } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 
 interface IssueDetailProps {
@@ -26,6 +26,28 @@ export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: Iss
     // 在这些编号前插入换行符
     return text.replace(/([^\n])\s+(\d+[\.\、]\s)/g, '$1\n$2');
   };
+
+  // 收集所有相关知识库链接
+  const allKnowledgeLinks = [
+    ...issue.howToCheck.knowledgeLinks,
+    ...(issue.fixSteps?.knowledgeLinks || [])
+  ];
+
+  const allGifGuides = [
+    ...issue.howToCheck.gifGuides,
+    ...(issue.fixSteps?.gifGuides || [])
+  ];
+
+  const allScriptLinks = [
+    ...issue.howToCheck.scriptLinks,
+    ...(issue.fixSteps?.scriptLinks || [])
+  ];
+
+  // 判断是否有任何相关链接
+  const hasRelatedLinks =
+    allKnowledgeLinks.length > 0 ||
+    allGifGuides.length > 0 ||
+    allScriptLinks.length > 0;
 
   /**
    * 根据优先级数字获取颜色样式
@@ -122,7 +144,7 @@ export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: Iss
           <section>
             <h3 className="text-lg font-semibold mb-3">如何确认（How to Check）</h3>
             <Card className="p-4">
-              <div className="text-gray-700 space-y-3 mb-4">
+              <div className="text-gray-700 space-y-3">
                 {formatNumberedList(issue.howToCheck.description).split('\n').map((line, index) => (
                   line.trim() && (
                     <p key={index} className="leading-relaxed">
@@ -131,78 +153,6 @@ export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: Iss
                   )
                 ))}
               </div>
-
-              {/* 知识库链接 */}
-              {issue.howToCheck.knowledgeLinks.length > 0 && (
-                <div className="mb-3">
-                  <div className="flex items-center gap-2 text-sm font-medium mb-2">
-                    <Book className="w-4 h-4" />
-                    <span>参考知识库：</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {issue.howToCheck.knowledgeLinks.map((link) => (
-                      <a
-                        key={link.id}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
-                      >
-                        {link.title}
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* GIF 指引 */}
-              {issue.howToCheck.gifGuides.length > 0 && (
-                <div className="mb-3">
-                  <div className="flex items-center gap-2 text-sm font-medium mb-2">
-                    <ImageIcon className="w-4 h-4" />
-                    <span>演示视频：</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {issue.howToCheck.gifGuides.map((guide) => (
-                      <a
-                        key={guide.id}
-                        href={guide.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
-                      >
-                        {guide.title}
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 脚本链接 */}
-              {issue.howToCheck.scriptLinks.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 text-sm font-medium mb-2">
-                    <FileCode className="w-4 h-4" />
-                    <span>相关脚本：</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {issue.howToCheck.scriptLinks.map((script) => (
-                      <a
-                        key={script.id}
-                        href={script.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
-                      >
-                        {script.title}
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
             </Card>
           </section>
 
@@ -216,7 +166,7 @@ export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: Iss
                 <section>
                   <h3 className="text-lg font-semibold mb-3 text-green-700">修复步骤（Fix Steps）</h3>
                   <Card className="p-4 bg-green-50 border-green-200">
-                    <div className="text-gray-700 space-y-3 mb-4">
+                    <div className="text-gray-700 space-y-3">
                       {formatNumberedList(issue.fixSteps.description).split('\n').map((line, index) => (
                         line.trim() && (
                           <p key={index} className="leading-relaxed">
@@ -225,82 +175,76 @@ export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: Iss
                         )
                       ))}
                     </div>
-
-                    {/* 知识库链接 */}
-                    {issue.fixSteps.knowledgeLinks.length > 0 && (
-                      <div className="mb-3">
-                        <div className="flex items-center gap-2 text-sm font-medium mb-2">
-                          <Book className="w-4 h-4" />
-                          <span>参考知识库：</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {issue.fixSteps.knowledgeLinks.map((link) => (
-                            <a
-                              key={link.id}
-                              href={link.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
-                            >
-                              {link.title}
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* GIF 指引 */}
-                    {issue.fixSteps.gifGuides.length > 0 && (
-                      <div className="mb-3">
-                        <div className="flex items-center gap-2 text-sm font-medium mb-2">
-                          <ImageIcon className="w-4 h-4" />
-                          <span>演示视频：</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {issue.fixSteps.gifGuides.map((guide) => (
-                            <a
-                              key={guide.id}
-                              href={guide.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
-                            >
-                              {guide.title}
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* 脚本链接 */}
-                    {issue.fixSteps.scriptLinks.length > 0 && (
-                      <div>
-                        <div className="flex items-center gap-2 text-sm font-medium mb-2">
-                          <FileCode className="w-4 h-4" />
-                          <span>相关脚本：</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {issue.fixSteps.scriptLinks.map((script) => (
-                            <a
-                              key={script.id}
-                              href={script.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
-                            >
-                              {script.title}
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </Card>
                 </section>
               </div>
             </>
+          )}
+
+          {/* 相关知识库（集中展示所有链接） */}
+          {hasRelatedLinks && (
+            <div className="border-t pt-6">
+              <section>
+                <h3 className="text-lg font-semibold mb-3 text-purple-700">相关知识库</h3>
+                <Card className="p-4 bg-purple-50 border-purple-200">
+                  <div className="space-y-4">
+                    {/* 知识库链接 */}
+                    {allKnowledgeLinks.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {allKnowledgeLinks.map((link, index) => (
+                          <a
+                            key={link.id}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
+                          >
+                            wiki{index + 1}
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* GIF 指引 */}
+                    {allGifGuides.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {allGifGuides.map((guide, index) => (
+                          <a
+                            key={guide.id}
+                            href={guide.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
+                          >
+                            gif{index + 1}
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* 脚本链接 */}
+                    {allScriptLinks.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {allScriptLinks.map((script, index) => (
+                          <a
+                            key={script.id}
+                            href={script.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 text-sm flex items-center gap-1"
+                          >
+                            脚本{index + 1}
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </Card>
+              </section>
+            </div>
           )}
         </div>
       </div>

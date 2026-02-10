@@ -17,6 +17,7 @@ export interface IssueSummary {
   priority: number;
   version: string;
   sourceFile: string;
+  checklistCount: number;
   howToCheck: {
     description: string;
     knowledgeLinks: Array<{ id: string; title: string; url: string }>;

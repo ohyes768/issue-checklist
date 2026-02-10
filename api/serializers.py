@@ -18,12 +18,24 @@ def issue_to_summary_dict(issue: Issue) -> Dict[str, Any]:
     Returns:
         可 JSON 序列化的字典
     """
+    # 计算检查单总数（包括所有子项）
+    def count_checklists(items) -> int:
+        count = 0
+        for item in items:
+            count += 1
+            if hasattr(item, 'checklist') and item.checklist:
+                count += count_checklists(item.checklist)
+        return count
+
+    checklist_count = count_checklists(issue.checklist)
+
     return {
         "title": issue.status,
         "describe": issue.describe,
         "priority": issue.priority,
         "version": issue.version,
         "sourceFile": issue.file_name,
+        "checklistCount": checklist_count,
         "howToCheck": {
             "description": issue.describe,
             "knowledgeLinks": [],

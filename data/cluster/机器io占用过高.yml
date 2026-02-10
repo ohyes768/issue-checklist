@@ -8,7 +8,7 @@ checklist:
     describe: "登录后台top查看wa等待很高，iostat 查看磁盘占用100%，或登录飞梭页面，信息监控页面查看io占用曲线图，一直100%"
     priority: 8
     version: "-"
-    todo: >
+    todo: |
       1. 旧底座查看bigdata容器中lograte 定时任务。如有需要注释，该任务会占用大量的磁盘io。
       2. 测试磁盘io、检测磁盘是否有坏道。
       3. 新底座 一般第一台的io占用比较高，建议设置第一台的es节点数据写入，操作可参考文档：

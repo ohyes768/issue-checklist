@@ -57,7 +57,7 @@ def tree_node_to_dict(node: TreeChecklistItem) -> Dict[str, Any]:
 
         # HowToCheck 信息
         "howToCheck": {
-            "description": node.describe,
+            "description": node.describe if node.describe else "",
             "knowledgeLinks": [
                 {
                     "id": f"wiki_{i}",
@@ -86,7 +86,7 @@ def tree_node_to_dict(node: TreeChecklistItem) -> Dict[str, Any]:
 
         # FixSteps（如果有解决方案）
         "fixSteps": {
-            "description": node.todo,
+            "description": node.todo if node.todo else "",
             "knowledgeLinks": [
                 {
                     "id": f"wiki_{i}",

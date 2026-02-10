@@ -23,7 +23,7 @@ checklist:
     describe: "1.查询日志引擎相关日志，检索Exception出现，2.登录kibana，创建日志/流量相关index patterns，创建完成后查看Fields数目, >1000 "
     priority: 4
     version: "5.0之前"
-    todo: >
+    todo: |
       1.登录kibana，设置相关索引mapping上限，devtools执行命令：PUT ailpha-baas-log-*/_settings{ \"index.mapping.total_fields.limit\": 2000 } 
       2. 建议升级5.0版本以上"  
     gif_links:

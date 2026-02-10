@@ -8,6 +8,6 @@ checklist:
      describe: "登录服务器后台，使用ethtool xx | grep Speed查看网卡信息"
      priority: 6
      version: "-"
-     todo: >
+     todo: |
        1. 登录服务器后台，使用ethtool xx | grep Speed查看网卡，如是百兆，说明网卡有问题，最低要千兆。
        2. 使用 sar -n DEV 1 5 查看网卡使用是否满了，多台集群情况下，需要更换万兆网卡，不然会存在网卡瓶颈。

@@ -8,7 +8,7 @@ checklist:
      describe: "登录大数据界面，kafka监控页面，topic监控或信息监控页面查看kafka入库速度曲线"
      priority: 8
      version: "-"
-     todo: >
+     todo: |
        1. 登录大数据界面，kafka监控页面，topic监控，可以查看最近1分钟、10、15分钟接入的数据量。
        2. 信息监控页面，查看具体topic的接入数据量的曲线图，判断接入数据流的平均速度。与流任务处理速度进行比较，判断数据处理是否有挤压。
      gif_links:

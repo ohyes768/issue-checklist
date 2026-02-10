@@ -82,7 +82,10 @@ export const knowledgeApi = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      return await response.json();
+      // 直接使用 response.json()，让浏览器自动解析
+      const data = await response.json();
+
+      return data;
     } catch (error) {
       console.error('获取问题树失败:', error);
       throw error;

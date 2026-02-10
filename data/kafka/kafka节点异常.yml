@@ -14,7 +14,7 @@ checklist:
     describe: "后台登录kafka容器中，执行kafka消费命令是否报错"
     priority: 8
     version: "-"
-    todo: >
+    todo: |
       1. 5.2版本之前，进入kafka容器中执行命令：docker exec -it kafka /bin/bash,./kafka-console-consumer.sh --zookeeper 1.zookeeper1 --topic com.dbapp.topic.rawevent ,topic名称可以根据需求自己换。
       2. 5.2之后，消费命令docker run -ti --rm --net cilium-net -v /opt/ailpha-install/cluster_init/resolv.conf:/etc/resolv.conf ailpha-registry:5000/kafka:3.6.0 bash
       sh /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server 1-kafka-1:9092 --topic com.dbapp.topic.rawevent | grep '1.1.1.1'

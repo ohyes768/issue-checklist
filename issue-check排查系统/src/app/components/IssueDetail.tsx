@@ -18,6 +18,16 @@ interface IssueDetailProps {
  */
 export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: IssueDetailProps) {
   /**
+   * 智能格式化文本：将编号列表转换为行
+   * 匹配模式：1. xxx 2. xxx 3. xxx 或 1、xxx 2、xxx 3、xxx
+   */
+  const formatNumberedList = (text: string): string => {
+    // 匹配 "数字. " 或 "数字、" 前面没有换行的情况
+    // 在这些编号前插入换行符
+    return text.replace(/([^\n])\s+(\d+[\.\、]\s)/g, '$1\n$2');
+  };
+
+  /**
    * 根据优先级数字获取颜色样式
    */
   const getPriorityColor = (priority: number): string => {
@@ -112,9 +122,15 @@ export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: Iss
           <section>
             <h3 className="text-lg font-semibold mb-3">如何确认（How to Check）</h3>
             <Card className="p-4">
-              <p className="text-gray-700 whitespace-pre-line mb-4">
-                {issue.howToCheck.description}
-              </p>
+              <div className="text-gray-700 space-y-3 mb-4">
+                {formatNumberedList(issue.howToCheck.description).split('\n').map((line, index) => (
+                  line.trim() && (
+                    <p key={index} className="leading-relaxed">
+                      {line}
+                    </p>
+                  )
+                ))}
+              </div>
 
               {/* 知识库链接 */}
               {issue.howToCheck.knowledgeLinks.length > 0 && (
@@ -200,9 +216,15 @@ export function IssueDetail({ issue, onBack, onHome, canGoBack, canGoHome }: Iss
                 <section>
                   <h3 className="text-lg font-semibold mb-3 text-green-700">修复步骤（Fix Steps）</h3>
                   <Card className="p-4 bg-green-50 border-green-200">
-                    <p className="text-gray-700 whitespace-pre-line mb-4">
-                      {issue.fixSteps.description}
-                    </p>
+                    <div className="text-gray-700 space-y-3 mb-4">
+                      {formatNumberedList(issue.fixSteps.description).split('\n').map((line, index) => (
+                        line.trim() && (
+                          <p key={index} className="leading-relaxed">
+                            {line}
+                          </p>
+                        )
+                      ))}
+                    </div>
 
                     {/* 知识库链接 */}
                     {issue.fixSteps.knowledgeLinks.length > 0 && (

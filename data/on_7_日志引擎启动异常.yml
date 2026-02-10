@@ -26,7 +26,7 @@ checklist:
     describe: "1. 流计算任务日志中有kafka topic相关错误，可查看的关键字有dead、Exception、ERROR. /n 2.后台消费kafka命令，出现 错误"
     priority: 8
     version: "-"
-    todo: >
+    todo: |
        1. 5.2 之前版本，使用 tools/下面delete相关脚本重建kafka topic，删除之后，重启baas重建topic。
        2. 5.2之后，运维管理界面，kafka监控--topic监控页面，点击重建内置topic。
        3. nodemager/datanode相关节点，容器中ping一下kafka是否通或者telnet kafka直接的端口 如：telnet 1.kafka1 9092 或telnet 1.1.1.1 19091。

@@ -10,6 +10,6 @@ checklist:
     describe: "检查探针数据发送到devicealarm这个topic中的数据配置"
     priority: 6
     version: "-"
-    todo: >
+    todo: |
       1. 检查soc/ailog 数据发送配置，devicealarm这个topic中发送的数据要配置告警级别大于等于3的数据，否则就是发送的数据有问题。
       2. 检查apt数据发送设备，数据发送devicealarm这个topic中的只发送风险信息。其他的都不要配置。

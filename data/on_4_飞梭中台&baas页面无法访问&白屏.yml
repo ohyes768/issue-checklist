@@ -9,7 +9,7 @@ checklist:
     describe: "查看baas日志，日志报错 \"flink下yaml配置文件中尽量不要使用空值，请把默认值写上\""
     priority: 3
     version: "-"
-    todo: >
+    todo: |
       后台命令进入Mysql/PG/HG，清理baas_monitor 数据库中pipeline相关表 按照顺序依次清理以下表：delete from t_pipeline_dbconfig;delete from t_pipeline_dbmetric;delete from t_flink_pipeline;delete from t_solution_user_bool_info;delete from t_solution; 
       查看Wiki文档了解详情
     wiki_links:
@@ -19,7 +19,7 @@ checklist:
     describe: "查看auth日志，日志报错 \"存在host头攻击风险，禁止访问\""
     priority: 10
     version: "BaaS-v4.9+"
-    todo: >
+    todo: |
        1. 后台映射nacos的端口：。
        2. 访问nacos页面，http://<ip>:18848/nacos，
        3.登陆后选择命名空间ailpha_zq/，编辑core-prod当中trust_referer参数，追加映射后的IP或者域名，以逗号隔开。

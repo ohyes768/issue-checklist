@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Button } from '@/app/components/ui/button';
 import { Card } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
-import { AlertCircle, Loader2, Search } from 'lucide-react';
+import { Loader2, Search, RefreshCw } from 'lucide-react';
 import type { IssueSummary } from '@/app/services/api';
 import { pinyin } from 'pinyin-pro';
 
@@ -200,27 +200,31 @@ export function IssueSelector({
               return (
                 <Card
                   key={issue.title}
-                  className="p-4 hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-300"
+                  className="p-2.5 hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-300"
                   onClick={() => onSelectIssue(issue.title)}
                 >
-                  {/* 头部：图标和优先级 */}
-                  <div className="flex items-start justify-between mb-2">
-                    <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                    <Badge className={getPriorityColor(priority)} variant="outline">
+                  {/* 标题 */}
+                  <h3 className="text-sm font-semibold mb-1 line-clamp-1 leading-tight">{issue.title}</h3>
+
+                  {/* 描述 */}
+                  <p className="text-xs text-gray-600 mb-1.5 line-clamp-1 leading-tight">
+                    {issue.describe}
+                  </p>
+
+                  {/* 检查单数量 + 优先级 */}
+                  <div className="flex items-center justify-between gap-2 mb-1.5 text-xs text-gray-500">
+                    <div className="flex items-center gap-1">
+                      <span>检查单:</span>
+                      <span className="font-semibold text-blue-600">{issue.checklistCount}</span>
+                      <span>项</span>
+                    </div>
+                    <Badge className={`${getPriorityColor(priority)} text-xs px-1 py-0`} variant="outline">
                       P{priority}
                     </Badge>
                   </div>
 
-                  {/* 标题 */}
-                  <h3 className="text-base font-semibold mb-2 line-clamp-2">{issue.title}</h3>
-
-                  {/* 描述 */}
-                  <p className="text-xs text-gray-600 mb-3 line-clamp-2">
-                    {issue.describe}
-                  </p>
-
                   {/* 开始按钮 */}
-                  <Button className="w-full" variant="outline" size="sm">
+                  <Button className="w-full h-7 text-xs" variant="outline" size="sm">
                     开始排查
                   </Button>
                 </Card>

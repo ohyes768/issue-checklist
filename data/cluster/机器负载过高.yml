@@ -9,7 +9,7 @@ checklist:
     describe: "登录后台top查看%Cpu(s)占用很高，或登录飞梭页面，信息监控页面查看机器cpu占用曲线图"
     priority: 8
     version: "-"
-    todo: >
+    todo: |
       登录后台，lscpu查看cpu信息，核数等。docker stats 查容器cpu占用高的容器，如果是1.ai1/flex-ai 和flex-job 的cpus，需要限制容器cpu占用。具体配置可以修改
       1. 新底座：例：修改flex-ai,修改文件/opt/ailpha-install/docker-compose/docker-compose-application.yml，在对应容器名称对应的resources limit下，添加一个cpus: '1'
       docker-compose -f /opt/ailpha-install/docker-compose/docker-compose-application.yml up -d flex-ai  

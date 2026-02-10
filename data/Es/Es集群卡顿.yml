@@ -9,7 +9,7 @@ checklist:
     describe: "通过登录飞梭平台，运维管理--ES监控页面查看jvm占用情况，标识黄色或红色，表示jvm占用过高，需要关闭一些历史索引"
     priority: 8
     version: "-"
-    todo: >
+    todo: |
       1. 通过数据配置，数据生命周期页面，设置数据保存时间。
       2. 登录飞梭平台es监控，索引管理页面查询历史索引并关闭。
     gif_links:
@@ -19,5 +19,5 @@ checklist:
     describe: "es查询存在慢日志"
     priority: 8
     version: "-"
-    todo: >
+    todo: |
         登录飞梭平台es监控，慢日志分析界面，查看慢查询日志，将慢查询语句发给开发或者使用ai进行分析。

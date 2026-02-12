@@ -148,6 +148,85 @@ scripts/stop_app.bat
 ./scripts/stop_app.sh
 ```
 
+## 🐳 Docker 容器化部署
+
+### 📦 部署架构
+
+```
+┌─────────────────┐
+│   Nginx :80     │  前端容器
+│  ─────────────  │
+│  静态文件       │
+│  + API 反向代理 │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  FastAPI :8000  │  后端容器
+│  ─────────────  │
+│  YAML 数据      │
+└─────────────────┘
+```
+
+### 🚀 快速开始
+
+#### 本地 Docker 部署
+
+```bash
+# 1. 构建并启动所有服务
+docker-compose up -d --build
+
+# 2. 查看服务状态
+docker-compose ps
+
+# 3. 查看日志
+docker-compose logs -f
+```
+
+**访问地址**:
+- 前端: http://localhost
+- 后端 API: http://localhost:8000
+- API 文档: http://localhost:8000/docs
+
+#### Windows 打包 + Linux 部署
+
+```bash
+# Windows 端 - 导出镜像
+scripts\export-images.bat
+
+# 传输到 Linux 服务器
+scp -r docker-images/ root@server:/opt/issue-checklist/
+scp docker-compose-linux.yml root@server:/opt/issue-checklist/
+
+# Linux 端 - 加载并启动
+cd /opt/issue-checklist
+chmod +x scripts/load-images.sh
+./scripts/load-images.sh
+docker-compose -f docker-compose-linux.yml up -d
+```
+
+### 🔧 常用命令
+
+```bash
+# 停止服务
+docker-compose down
+
+# 重启服务
+docker-compose restart
+
+# 查看日志
+docker-compose logs -f backend
+docker-compose logs -f frontend
+
+# 重新构建
+docker-compose up -d --build
+```
+
+### 📚 详细文档
+
+- [Docker 部署指南](docs/docker-deployment.md)
+- [Windows 打包 Linux 部署指南](docs/docker-linux-deployment.md)
+
 ## 🚀 使用说明
 
 ### 📋 基础操作流程
@@ -251,10 +330,35 @@ checklist:
 
 ## 版本信息
 
-- 版本: 1.2.0
+- 版本: 1.3.0
 - 基于: Claude Code 生成
 
 ### 更新日志
+
+#### v1.3.0 (2026-02-11)
+**Docker 容器化部署**：
+- 🐳 新增 Docker 容器化支持，一键部署前后端服务
+- 📦 新增后端容器：Python 3.11 + FastAPI + Uvicorn
+- 📦 新增前端容器：React + Vite + Nginx 多阶段构建
+- 🔧 新增 Nginx 反向代理，统一处理前端路由和 API 请求
+- 🚀 新增 Docker Compose 编排配置
+- 📚 新增完整的 Docker 部署文档
+- 🌐 支持跨平台部署：Windows 本地构建 → Linux 服务器部署
+
+**前端环境配置优化**：
+- ⚙️ 新增 .env.production 生产环境变量
+- 🔧 vite.config.ts 添加开发环境 API 代理配置
+- 🔧 api.ts 优化 API 基础 URL 配置逻辑（自动识别环境）
+
+**部署脚本**：
+- 📜 scripts/export-images.bat - Windows 镜像导出脚本
+- 📜 scripts/export-images.sh - 多平台镜像构建脚本
+- 📜 scripts/load-images.sh - Linux 镜像加载脚本
+
+**文档更新**：
+- 📖 docs/docker-deployment.md - Docker 部署完整指南
+- 📖 docs/docker-linux-deployment.md - Windows 打包 Linux 部署指南
+- 📖 docs/运维排查助手技术设计方案.md - 添加 Docker 架构设计章节
 
 #### v1.2.0 (2026-01-22)
 **功能增强**：

@@ -5,8 +5,11 @@
 
 import type { CheckItem } from '../types/knowledge-base';
 
-// API 基础 URL（从环境变量读取，默认 localhost:8000）
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+// API 基础 URL（从环境变量读取）
+// 生产环境留空，使用相对路径通过 Nginx 代理
+// 开发环境默认 localhost:8000
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ||
+                     (import.meta.env.MODE === 'production' ? '' : 'http://localhost:8000');
 
 /**
  * 问题摘要接口

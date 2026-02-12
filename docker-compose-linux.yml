@@ -1,0 +1,46 @@
+version: '3.8'
+
+# Docker Compose 配置 - Linux 服务器部署
+# 用于在 Linux 服务器上使用预构建的镜像
+
+services:
+  # 后端 API 服务
+  backend:
+    image: issue-checklist-backend:latest
+    container_name: issue-checklist-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # 挂载数据目录，支持热更新 YAML 文件
+      - ./data:/app/data
+      # 挂载日志目录
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - issue-checklist-network
+
+  # 前端 Web 服务
+  frontend:
+    image: issue-checklist-frontend:latest
+    container_name: issue-checklist-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    networks:
+      - issue-checklist-network
+
+networks:
+  issue-checklist-network:
+    driver: bridge
